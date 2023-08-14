@@ -119,7 +119,30 @@ public class AccionesCrud {
             return false;
         }
     }
-
+    //Funcion principal para Guardar o Modificar los datos de todos los cruds del app y 
+    //se recibe un arreglo de objetos donde estan todos los datos a ingresar al comando de sql ; Tambien recibe el comando de sql
+    public boolean Guardar_ModificarSinAviso(Object[] datos, String exec) {
+        int longitud = datos.length;
+        try {
+            Connection con = Conexion.getConexion();
+            PreparedStatement ps = con.prepareStatement(exec);
+            for (int i = 0; i < longitud; i++) {
+                if (datos[i] instanceof String) {
+                    ps.setString(i + 1, (String) datos[i]);
+                } else if (datos[i] instanceof Integer) {
+                    ps.setInt(i + 1, (Integer) datos[i]);
+                } else if (datos[i] instanceof Double) {
+                    ps.setDouble(i + 1, (Double) datos[i]);
+                }
+            }
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ups! " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
     //seleccionar elemento de las tablas a las que se les de click en los paneles que no son Extra 
     //se recibe  la tabla de donde proceden los datos , el comando de sql para hacer el SELECT con WHERE y el nombre de la columna de la tabla con el ID
     public ResultSet Seleccion(JTable tabla, String exec, String nombreColumna) {
@@ -132,6 +155,34 @@ public class AccionesCrud {
             Connection con = Conexion.getConexion();
             ps = con.prepareStatement(exec);
             ps.setString(1, id);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+            return null;
+        }
+    }
+     public ResultSet ResultSetDeQuery( String exec,String id) {
+        try {
+            PreparedStatement ps;
+            ResultSet rs;
+            Connection con = Conexion.getConexion();
+            ps = con.prepareStatement(exec);
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+            return null;
+        }
+    }
+     
+       public ResultSet SeleccionNormal(String exec) {
+        try {
+            PreparedStatement ps;
+            ResultSet rs;
+            Connection con = Conexion.getConexion();
+            ps = con.prepareStatement(exec);
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {

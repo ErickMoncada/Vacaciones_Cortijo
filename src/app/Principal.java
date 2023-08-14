@@ -29,9 +29,10 @@ public class Principal extends javax.swing.JFrame {
         NivelDeAcceso = NIVEL;
         //mostrar el menu principal
         new CambiaPanel(pnlPrincipal, new paneles.pnlHome(NOMBRE));
-        this.btnUserTel.setColorNormal(new Color(239, 238, 244));
-        this.btnEquipos.setColorNormal(new Color(239, 238, 244));
-        this.btnAjustes.setColorNormal(new Color(239, 238, 244));
+        this.btnSolicitar.setColorNormal(new Color(239, 238, 244));
+        this.btnSolicitudes.setColorNormal(new Color(239, 238, 244));
+        this.btnUsuariosApp.setColorNormal(new Color(239, 238, 244));
+        this.btnCruds.setColorNormal(new Color(239, 238, 244));
         //iniciar funcion para el icono
         setIconImage(reescalar.getIconImage());
         //Iniciar funcion para iconos del submenu , titulo y boton salir
@@ -40,7 +41,7 @@ public class Principal extends javax.swing.JFrame {
         Reloj();
         //comprobar que nivel es para el acceso a ajustes
         if ("Lector".equals(NIVEL)) {
-            btnAjustes.setVisible(false);
+            btnUsuariosApp.setVisible(false);
             lblAplicacion.setVisible(false);
         }
         this.setExtendedState(MAXIMIZED_BOTH);
@@ -51,11 +52,11 @@ public class Principal extends javax.swing.JFrame {
 
     //asignar los iconos de cada submenu , titulo y boton de salir
     private void IconosBarraLateral() {
-        btnUserTel.setIcon(reescalar.IconoTextoMenu(50, 50, "img1/agregar-usuario.png"));
-        btnEquipos.setIcon(reescalar.IconoTextoMenu(50, 50, "img1/equipos.png"));
+        btnSolicitar.setIcon(reescalar.IconoTextoMenu(50, 50, "img1/agregar-usuario.png"));
+        btnSolicitudes.setIcon(reescalar.IconoTextoMenu(50, 50, "img1/equipos.png"));
         lblTituloTelefonia.setIcon(reescalar.IconoTextoMenu(50, 50, "img1/Pollos-El-Cortijo.png"));
         btnSalir.setIcon(reescalar.IconoTextoMenu(40, 40, "img1/cerrar-sesion.png"));
-        btnAjustes.setIcon(reescalar.IconoTextoMenu(40, 40, "img1/perfil.png"));
+        btnUsuariosApp.setIcon(reescalar.IconoTextoMenu(40, 40, "img1/perfil.png"));
     }
 
     ///funcion para mostrar reloj
@@ -80,14 +81,14 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         pnlMenu = new javax.swing.JPanel();
-        btnUserTel = new rsbuttom.RSButtonMetro();
+        btnSolicitar = new rsbuttom.RSButtonMetro();
         jPanel4 = new javax.swing.JPanel();
         lblTelefonia = new javax.swing.JLabel();
-        btnEquipos = new rsbuttom.RSButtonMetro();
+        btnSolicitudes = new rsbuttom.RSButtonMetro();
         jPanel5 = new javax.swing.JPanel();
         lblAplicacion = new javax.swing.JLabel();
-        btnAjustes = new rsbuttom.RSButtonMetro();
-        btnAjustes1 = new rsbuttom.RSButtonMetro();
+        btnUsuariosApp = new rsbuttom.RSButtonMetro();
+        btnCruds = new rsbuttom.RSButtonMetro();
         pnlCentro = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         lblHora = new javax.swing.JLabel();
@@ -110,27 +111,27 @@ public class Principal extends javax.swing.JFrame {
         pnlMenu.setBackground(new java.awt.Color(239, 238, 244));
         pnlMenu.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(239, 238, 244)));
 
-        btnUserTel.setForeground(new java.awt.Color(128, 128, 131));
-        btnUserTel.setText("Solicitar Vacaciones");
-        btnUserTel.setColorHover(new java.awt.Color(204, 204, 204));
-        btnUserTel.setColorNormal(new java.awt.Color(204, 204, 204));
-        btnUserTel.setColorPressed(new java.awt.Color(204, 204, 204));
-        btnUserTel.setColorTextHover(new java.awt.Color(128, 128, 131));
-        btnUserTel.setColorTextNormal(new java.awt.Color(128, 128, 131));
-        btnUserTel.setColorTextPressed(new java.awt.Color(128, 128, 131));
-        btnUserTel.setFocusable(false);
-        btnUserTel.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnUserTel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnUserTel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btnUserTel.setIconTextGap(25);
-        btnUserTel.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnSolicitar.setForeground(new java.awt.Color(128, 128, 131));
+        btnSolicitar.setText("Solicitar Vacaciones");
+        btnSolicitar.setColorHover(new java.awt.Color(204, 204, 204));
+        btnSolicitar.setColorNormal(new java.awt.Color(204, 204, 204));
+        btnSolicitar.setColorPressed(new java.awt.Color(204, 204, 204));
+        btnSolicitar.setColorTextHover(new java.awt.Color(128, 128, 131));
+        btnSolicitar.setColorTextNormal(new java.awt.Color(128, 128, 131));
+        btnSolicitar.setColorTextPressed(new java.awt.Color(128, 128, 131));
+        btnSolicitar.setFocusable(false);
+        btnSolicitar.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnSolicitar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnSolicitar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnSolicitar.setIconTextGap(25);
+        btnSolicitar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnUserTelMousePressed(evt);
+                btnSolicitarMousePressed(evt);
             }
         });
-        btnUserTel.addActionListener(new java.awt.event.ActionListener() {
+        btnSolicitar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUserTelActionPerformed(evt);
+                btnSolicitarActionPerformed(evt);
             }
         });
 
@@ -157,28 +158,28 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        btnEquipos.setBackground(new java.awt.Color(239, 238, 244));
-        btnEquipos.setForeground(new java.awt.Color(128, 128, 131));
-        btnEquipos.setText("Solicitudes de Vacaciones");
-        btnEquipos.setColorHover(new java.awt.Color(204, 204, 204));
-        btnEquipos.setColorNormal(new java.awt.Color(239, 238, 244));
-        btnEquipos.setColorPressed(new java.awt.Color(204, 204, 204));
-        btnEquipos.setColorTextHover(new java.awt.Color(128, 128, 131));
-        btnEquipos.setColorTextNormal(new java.awt.Color(128, 128, 131));
-        btnEquipos.setColorTextPressed(new java.awt.Color(128, 128, 131));
-        btnEquipos.setFocusable(false);
-        btnEquipos.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnEquipos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnEquipos.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btnEquipos.setIconTextGap(25);
-        btnEquipos.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnSolicitudes.setBackground(new java.awt.Color(239, 238, 244));
+        btnSolicitudes.setForeground(new java.awt.Color(128, 128, 131));
+        btnSolicitudes.setText("Solicitudes de Vacaciones");
+        btnSolicitudes.setColorHover(new java.awt.Color(204, 204, 204));
+        btnSolicitudes.setColorNormal(new java.awt.Color(239, 238, 244));
+        btnSolicitudes.setColorPressed(new java.awt.Color(204, 204, 204));
+        btnSolicitudes.setColorTextHover(new java.awt.Color(128, 128, 131));
+        btnSolicitudes.setColorTextNormal(new java.awt.Color(128, 128, 131));
+        btnSolicitudes.setColorTextPressed(new java.awt.Color(128, 128, 131));
+        btnSolicitudes.setFocusable(false);
+        btnSolicitudes.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnSolicitudes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnSolicitudes.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnSolicitudes.setIconTextGap(25);
+        btnSolicitudes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnEquiposMousePressed(evt);
+                btnSolicitudesMousePressed(evt);
             }
         });
-        btnEquipos.addActionListener(new java.awt.event.ActionListener() {
+        btnSolicitudes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEquiposActionPerformed(evt);
+                btnSolicitudesActionPerformed(evt);
             }
         });
 
@@ -206,53 +207,53 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        btnAjustes.setBackground(new java.awt.Color(239, 238, 244));
-        btnAjustes.setForeground(new java.awt.Color(128, 128, 131));
-        btnAjustes.setText("Usuarios");
-        btnAjustes.setColorHover(new java.awt.Color(204, 204, 204));
-        btnAjustes.setColorNormal(new java.awt.Color(239, 238, 244));
-        btnAjustes.setColorPressed(new java.awt.Color(204, 204, 204));
-        btnAjustes.setColorTextHover(new java.awt.Color(128, 128, 131));
-        btnAjustes.setColorTextNormal(new java.awt.Color(128, 128, 131));
-        btnAjustes.setColorTextPressed(new java.awt.Color(128, 128, 131));
-        btnAjustes.setFocusable(false);
-        btnAjustes.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnAjustes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnAjustes.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btnAjustes.setIconTextGap(25);
-        btnAjustes.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnUsuariosApp.setBackground(new java.awt.Color(239, 238, 244));
+        btnUsuariosApp.setForeground(new java.awt.Color(128, 128, 131));
+        btnUsuariosApp.setText("Usuarios");
+        btnUsuariosApp.setColorHover(new java.awt.Color(204, 204, 204));
+        btnUsuariosApp.setColorNormal(new java.awt.Color(239, 238, 244));
+        btnUsuariosApp.setColorPressed(new java.awt.Color(204, 204, 204));
+        btnUsuariosApp.setColorTextHover(new java.awt.Color(128, 128, 131));
+        btnUsuariosApp.setColorTextNormal(new java.awt.Color(128, 128, 131));
+        btnUsuariosApp.setColorTextPressed(new java.awt.Color(128, 128, 131));
+        btnUsuariosApp.setFocusable(false);
+        btnUsuariosApp.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnUsuariosApp.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnUsuariosApp.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnUsuariosApp.setIconTextGap(25);
+        btnUsuariosApp.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnAjustesMousePressed(evt);
+                btnUsuariosAppMousePressed(evt);
             }
         });
-        btnAjustes.addActionListener(new java.awt.event.ActionListener() {
+        btnUsuariosApp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAjustesActionPerformed(evt);
+                btnUsuariosAppActionPerformed(evt);
             }
         });
 
-        btnAjustes1.setBackground(new java.awt.Color(239, 238, 244));
-        btnAjustes1.setForeground(new java.awt.Color(128, 128, 131));
-        btnAjustes1.setText("CRUDS");
-        btnAjustes1.setColorHover(new java.awt.Color(204, 204, 204));
-        btnAjustes1.setColorNormal(new java.awt.Color(239, 238, 244));
-        btnAjustes1.setColorPressed(new java.awt.Color(204, 204, 204));
-        btnAjustes1.setColorTextHover(new java.awt.Color(128, 128, 131));
-        btnAjustes1.setColorTextNormal(new java.awt.Color(128, 128, 131));
-        btnAjustes1.setColorTextPressed(new java.awt.Color(128, 128, 131));
-        btnAjustes1.setFocusable(false);
-        btnAjustes1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnAjustes1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnAjustes1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btnAjustes1.setIconTextGap(25);
-        btnAjustes1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnCruds.setBackground(new java.awt.Color(239, 238, 244));
+        btnCruds.setForeground(new java.awt.Color(128, 128, 131));
+        btnCruds.setText("CRUDS");
+        btnCruds.setColorHover(new java.awt.Color(204, 204, 204));
+        btnCruds.setColorNormal(new java.awt.Color(239, 238, 244));
+        btnCruds.setColorPressed(new java.awt.Color(204, 204, 204));
+        btnCruds.setColorTextHover(new java.awt.Color(128, 128, 131));
+        btnCruds.setColorTextNormal(new java.awt.Color(128, 128, 131));
+        btnCruds.setColorTextPressed(new java.awt.Color(128, 128, 131));
+        btnCruds.setFocusable(false);
+        btnCruds.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnCruds.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnCruds.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnCruds.setIconTextGap(25);
+        btnCruds.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnAjustes1MousePressed(evt);
+                btnCrudsMousePressed(evt);
             }
         });
-        btnAjustes1.addActionListener(new java.awt.event.ActionListener() {
+        btnCruds.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAjustes1ActionPerformed(evt);
+                btnCrudsActionPerformed(evt);
             }
         });
 
@@ -264,16 +265,16 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlMenuLayout.createSequentialGroup()
                 .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnUserTel, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEquipos, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSolicitudes, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMenuLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAjustes, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUsuariosApp, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(pnlMenuLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnAjustes1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCruds, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlMenuLayout.setVerticalGroup(
@@ -281,15 +282,15 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(pnlMenuLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
-                .addComponent(btnUserTel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(btnEquipos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSolicitudes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(144, 144, 144)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAjustes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUsuariosApp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAjustes1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCruds, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -434,42 +435,46 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     //Genera la accion para cambiar de panel USUARIOS llamando a la clase del paquete paneles y cambia los colores de los que se seleccionaron antes
-    private void btnUserTelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserTelActionPerformed
+    private void btnSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarActionPerformed
         new CambiaPanel(pnlPrincipal, new paneles.pnlSolicitar());
-        if (this.btnUserTel.isSelected()) {
-            this.btnUserTel.setColorNormal(new Color(204, 204, 204));
-            this.btnEquipos.setColorNormal(new Color(239, 238, 244));
-            this.btnAjustes.setColorNormal(new Color(239, 238, 244));
+        if (this.btnSolicitar.isSelected()) {
+            this.btnSolicitar.setColorNormal(new Color(204, 204, 204));
+            this.btnSolicitudes.setColorNormal(new Color(239, 238, 244));
+            this.btnUsuariosApp.setColorNormal(new Color(239, 238, 244));
+            this.btnCruds.setColorNormal(new Color(239, 238, 244));
         } else {
-            this.btnUserTel.setColorNormal(new Color(239, 238, 244));
+            this.btnSolicitar.setColorNormal(new Color(239, 238, 244));
         }
-    }//GEN-LAST:event_btnUserTelActionPerformed
+    }//GEN-LAST:event_btnSolicitarActionPerformed
 
     //Establecer el estado de seleccionado al correspondiente boton y los demas con el estado desactivado
-    private void btnUserTelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUserTelMousePressed
-        this.btnUserTel.setSelected(true);
-        this.btnEquipos.setSelected(false);
-        this.btnAjustes.setSelected(false);
-    }//GEN-LAST:event_btnUserTelMousePressed
+    private void btnSolicitarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSolicitarMousePressed
+        this.btnSolicitar.setSelected(true);
+        this.btnSolicitudes.setSelected(false);
+        this.btnUsuariosApp.setSelected(false);
+        this.btnCruds.setSelected(false);
+    }//GEN-LAST:event_btnSolicitarMousePressed
 
     //Establecer el estado de seleccionado al correspondiente boton y los demas con el estado desactivado
-    private void btnEquiposMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEquiposMousePressed
-        this.btnUserTel.setSelected(false);
-        this.btnEquipos.setSelected(true);
-        this.btnAjustes.setSelected(false);
-    }//GEN-LAST:event_btnEquiposMousePressed
+    private void btnSolicitudesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSolicitudesMousePressed
+        this.btnSolicitar.setSelected(false);
+        this.btnSolicitudes.setSelected(true);
+        this.btnUsuariosApp.setSelected(false);
+        this.btnCruds.setSelected(false);
+    }//GEN-LAST:event_btnSolicitudesMousePressed
 
     //Genera la accion para cambiar de panel llamando a la clase del paquete paneles y cambia los colores de los que se seleccionaron antes
-    private void btnEquiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEquiposActionPerformed
+    private void btnSolicitudesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitudesActionPerformed
         new CambiaPanel(pnlPrincipal, new paneles.pnlSolicitudes());
-        if (this.btnEquipos.isSelected()) {
-            this.btnEquipos.setColorNormal(new Color(204, 204, 204));
-            this.btnUserTel.setColorNormal(new Color(239, 238, 244));
-            this.btnAjustes.setColorNormal(new Color(239, 238, 244));
+        if (this.btnSolicitudes.isSelected()) {
+            this.btnSolicitudes.setColorNormal(new Color(204, 204, 204));
+            this.btnSolicitar.setColorNormal(new Color(239, 238, 244));
+            this.btnCruds.setColorNormal(new Color(239, 238, 244));
+            this.btnUsuariosApp.setColorNormal(new Color(239, 238, 244));
         } else {
-            this.btnEquipos.setColorNormal(new Color(239, 238, 244));
+            this.btnSolicitudes.setColorNormal(new Color(239, 238, 244));
         }
-    }//GEN-LAST:event_btnEquiposActionPerformed
+    }//GEN-LAST:event_btnSolicitudesActionPerformed
 
     private Icon rotateIcon(Icon icon, double angleDegrees) {
         //funcion para girar icono
@@ -485,23 +490,25 @@ public class Principal extends javax.swing.JFrame {
     }
 
     //Establecer el estado de seleccionado al correspondiente boton y los demas con el estado desactivado
-    private void btnAjustesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAjustesMousePressed
-        this.btnUserTel.setSelected(false);
-        this.btnEquipos.setSelected(false);
-        this.btnAjustes.setSelected(true);
-    }//GEN-LAST:event_btnAjustesMousePressed
+    private void btnUsuariosAppMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuariosAppMousePressed
+        this.btnSolicitar.setSelected(false);
+        this.btnSolicitudes.setSelected(false);
+        this.btnUsuariosApp.setSelected(true);
+        this.btnCruds.setSelected(false);
+    }//GEN-LAST:event_btnUsuariosAppMousePressed
 
     //Genera la accion para cambiar de panel llamando a la clase del paquete paneles y cambia los colores de los que se seleccionaron antes
-    private void btnAjustesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjustesActionPerformed
+    private void btnUsuariosAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosAppActionPerformed
         new CambiaPanel(pnlPrincipal, new paneles.pnlUsuariosAplicacion(NivelDeAcceso));
-        if (this.btnAjustes.isSelected()) {
-            this.btnUserTel.setColorNormal(new Color(239, 238, 244));
-            this.btnEquipos.setColorNormal(new Color(239, 238, 244));
-            this.btnAjustes.setColorNormal(new Color(204, 204, 204));
+        if (this.btnUsuariosApp.isSelected()) {
+            this.btnSolicitar.setColorNormal(new Color(239, 238, 244));
+            this.btnSolicitudes.setColorNormal(new Color(239, 238, 244));
+            this.btnCruds.setColorNormal(new Color(239, 238, 244));
+            this.btnUsuariosApp.setColorNormal(new Color(204, 204, 204));
         } else {
-            this.btnEquipos.setColorNormal(new Color(239, 238, 244));
+            this.btnSolicitudes.setColorNormal(new Color(239, 238, 244));
         }
-    }//GEN-LAST:event_btnAjustesActionPerformed
+    }//GEN-LAST:event_btnUsuariosAppActionPerformed
 
     //Accion de boton hamburguesa para desplegar o esconder el menu lateral utilizando la libreria de NefAnimacion
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
@@ -538,21 +545,32 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void btnAjustes1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAjustes1MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAjustes1MousePressed
+    private void btnCrudsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrudsMousePressed
+        this.btnSolicitar.setSelected(false);
+        this.btnSolicitudes.setSelected(false);
+        this.btnUsuariosApp.setSelected(false);
+        this.btnCruds.setSelected(true);
+    }//GEN-LAST:event_btnCrudsMousePressed
 
-    private void btnAjustes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjustes1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAjustes1ActionPerformed
+    private void btnCrudsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrudsActionPerformed
+         new CambiaPanel(pnlPrincipal, new paneles.pnlCruds());
+        if (this.btnCruds.isSelected()) {
+            this.btnCruds.setColorNormal(new Color(204, 204, 204));
+            this.btnSolicitudes.setColorNormal(new Color(239, 238, 244));
+            this.btnUsuariosApp.setColorNormal(new Color(239, 238, 244));
+            this.btnSolicitar.setColorNormal(new Color(239, 238, 244));
+        } else {
+            this.btnSolicitar.setColorNormal(new Color(239, 238, 244));
+        }
+    }//GEN-LAST:event_btnCrudsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private rsbuttom.RSButtonMetro btnAjustes;
-    private rsbuttom.RSButtonMetro btnAjustes1;
-    private rsbuttom.RSButtonMetro btnEquipos;
+    private rsbuttom.RSButtonMetro btnCruds;
     private javax.swing.JButton btnMenu;
     private javax.swing.JButton btnSalir;
-    private rsbuttom.RSButtonMetro btnUserTel;
+    private rsbuttom.RSButtonMetro btnSolicitar;
+    private rsbuttom.RSButtonMetro btnSolicitudes;
+    private rsbuttom.RSButtonMetro btnUsuariosApp;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;

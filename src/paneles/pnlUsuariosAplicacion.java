@@ -284,7 +284,7 @@ public class pnlUsuariosAplicacion extends javax.swing.JPanel {
         });
 
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel9.setText("Número de Expediente:");
+        jLabel9.setText("Número de Codigo:");
 
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Nivel:");
@@ -362,10 +362,10 @@ public class pnlUsuariosAplicacion extends javax.swing.JPanel {
                             .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
                             .addComponent(txtCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(6, 6, 6)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblObligatorio)
-                                .addGap(43, 43, 43)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel9))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblObligatorio1)
@@ -440,7 +440,7 @@ public class pnlUsuariosAplicacion extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Usuario", "Nombre", "Correo", "Expediente", "Nivel de Acceso"
+                "Usuario", "Nombre", "Correo", "Nivel de Acceso", "Cod. Empleado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -461,6 +461,11 @@ public class pnlUsuariosAplicacion extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tblUsuarios);
 
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
         txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtBuscarKeyReleased(evt);
@@ -470,7 +475,7 @@ public class pnlUsuariosAplicacion extends javax.swing.JPanel {
             }
         });
 
-        cmbBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuario", "Nombre", "Expediente", "Correo" }));
+        cmbBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuario", "Nombre", "Codigo", "Correo" }));
         cmbBuscar.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbBuscarItemStateChanged(evt);
@@ -593,7 +598,7 @@ public class pnlUsuariosAplicacion extends javax.swing.JPanel {
                 while (rs.next()) {
                     txtUsuario.setText(rs.getString("Usuario"));
                     txtCorreo.setText(rs.getString("Correo"));
-                    txtExpediente.setText(rs.getString("Expediente"));
+                    txtExpediente.setText(rs.getString("Codigo"));
                     cmbNivel.setSelectedItem(rs.getString("Nivel"));
                 }
                 txtUsuario.enable(false);
@@ -617,8 +622,8 @@ public class pnlUsuariosAplicacion extends javax.swing.JPanel {
             case "Nombre":
                 Busqueda = "Nombre";
                 break;
-            case "Expediente":
-                Busqueda = "Expediente";
+            case "Codigo":
+                Busqueda = "Codigo";
                 break;
             case "Correo":
                 Busqueda = "Correo";
@@ -650,11 +655,11 @@ public class pnlUsuariosAplicacion extends javax.swing.JPanel {
 
         if ("".equals(agregado)) {
             //se muestra los resultados de la busqueda con filtros de checksbox
-            BusquedaTabla.CargarTabla(tblUsuarios, "select Usuario,Nombre,Correo,Expediente,Nivel from VistaUsuariosApp where " + Busqueda + "  LIKE '%" + txtBuscar.getText().trim() + "%' AND Nivel!='Root'");
+            BusquedaTabla.CargarTabla(tblUsuarios, "select Usuario,Nombre,Correo,Nivel,Codigo from VistaUsuariosApp where " + Busqueda + "  LIKE '%" + txtBuscar.getText().trim() + "%' AND Nivel!='Root'");
         } else {
             //se muestra los resultados de la busqueda sin filtros de checksbox
             String result = agregado.substring(4);
-            BusquedaTabla.CargarTabla(tblUsuarios, "select Usuario,Nombre,Correo,Expediente,Nivel from VistaUsuariosApp where " + result);
+            BusquedaTabla.CargarTabla(tblUsuarios, "select Usuario,Nombre,Correo,Nivel,Codigo from VistaUsuariosApp where " + result);
         }
     }
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
@@ -674,7 +679,7 @@ public class pnlUsuariosAplicacion extends javax.swing.JPanel {
             case "Nombre":
                 val.EntradaSoloLetas(txtBuscar, evt, 80);
                 break;
-            case "Expediente":
+            case "Codigo":
                 val.EntradaNumeros(txtBuscar, evt, 4);
                 break;
             case "Correo":
@@ -766,6 +771,10 @@ public class pnlUsuariosAplicacion extends javax.swing.JPanel {
         //se quita el estado de incorrecto
         val.TXTcorrecto(txtUsuario, lblErUsuario);
     }//GEN-LAST:event_txtUsuarioKeyReleased
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

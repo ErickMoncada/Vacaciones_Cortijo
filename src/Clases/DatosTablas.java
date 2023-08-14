@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+
 /**
  * @ErickMoncada Clase Para caargar datos a tablas y combobox
  */
@@ -60,4 +61,23 @@ public class DatosTablas {
             JOptionPane.showMessageDialog(null, e.toString());
         }
     }
+    public void cargarComboBoxEItems(String cmd, String campo,String idcampo, JComboBox cmbDestino) {
+    PreparedStatement ps;
+    ResultSet rs;
+    try {
+        Connection con = Conexion.getConexion();
+        ps = con.prepareStatement(cmd);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            int id = rs.getInt(idcampo);
+            String dato = rs.getString(campo);
+            DatosGerentesAreas item = new DatosGerentesAreas(id, dato);
+            cmbDestino.addItem( item);
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, e.toString());
+    }
+}
+
+    
 }

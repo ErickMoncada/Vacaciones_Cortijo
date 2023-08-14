@@ -9,19 +9,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import paneles.ExtraUsuarios.Categoria;
-import paneles.ExtraUsuarios.CentroCosto;
-import paneles.ExtraUsuarios.Planilla;
-import paneles.ExtraUsuarios.PuestoTrabajo;
-import paneles.ExtraUsuarios.Ubicacion;
 
 /**
  * @ErickMoncada controlador panel lineas telefonicas
@@ -47,7 +39,7 @@ public class pnlSolicitar extends javax.swing.JPanel {
     int year1 = 0, year2 = 0, year3 = 0, year4 = 0;
     int yearseleccionado;
 
-    //se inicializa para la busqueda por medio de Categoria
+    //se inicializa para la busqueda por medio de Puestos
     String Busqueda = "CodEmpleado";
     //se Inicializa la variabl del nivel para tneerlo en el Jframe
     String NivelAcceso;
@@ -401,7 +393,7 @@ public class pnlSolicitar extends javax.swing.JPanel {
                         .addComponent(cmbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -2,13 +2,24 @@ package paneles;
 
 import Clases.AccionesCrud;
 import Clases.DatosTablas;
+import Clases.FuncionesSolicitudes;
 import Clases.validaciones;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.WindowConstants;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import reporte.VacacionesDataSource;
 
 /**
  * @ErickMoncada controlador del panel Equipos
@@ -326,10 +337,10 @@ public class pnlSolicitudes extends javax.swing.JPanel {
             while (rs.next()) {
                 lblNombreAspirante.setText(rs.getString("Nombre"));
                 lblNombreSolicitador.setText(rs.getString("Jefe"));
-                lblDias.setText(rs.getString("Dias")+" Días");   
-                DiasSolicitados=(rs.getInt("Dias"));
-                CodEmpleado=(rs.getInt("CodEmpleado"));
-                idSolicitud=(rs.getInt("IdSolicitud"));
+                lblDias.setText(rs.getString("Dias") + " Días");
+                DiasSolicitados = (rs.getInt("Dias"));
+                CodEmpleado = (rs.getInt("CodEmpleado"));
+                idSolicitud = (rs.getInt("IdSolicitud"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(pnlSolicitudes.class.getName()).log(Level.SEVERE, null, ex);
@@ -385,32 +396,81 @@ public class pnlSolicitudes extends javax.swing.JPanel {
     }//GEN-LAST:event_txtBuscarKeyTyped
 
     private void btnDenegarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDenegarActionPerformed
-         AccionesCrud classcrud = new AccionesCrud();
-            if (classcrud.Guardar_Modificar(ArregloDatos(), "exec [NegarSolicitud] ?, ? ,? ")) {
-                Limpiar();
-                CargarDatosTabla();
-            }
+        AccionesCrud classcrud = new AccionesCrud();
+        if (classcrud.Guardar_Modificar(ArregloDatos(), "exec [NegarSolicitud] ?, ? ,? ")) {
+            Limpiar();
+            CargarDatosTabla();
+        }
     }//GEN-LAST:event_btnDenegarActionPerformed
 
-      private Object[] ArregloDatos() {
+    private Object[] ArregloDatos() {
         //se crea un arreglo de objetos para enviar a la clase de AccionesCrud y la funcion de Guardar_Modificar
         Object[] datos = new Object[3];
-       datos[0]=idSolicitud;
-       datos[1]=CodEmpleado;
-       datos[2]=DiasSolicitados;
+        datos[0] = idSolicitud;
+        datos[1] = CodEmpleado;
+        datos[2] = DiasSolicitados;
 
         return datos;
     }
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-           AccionesCrud classcrud = new AccionesCrud();
-            if (classcrud.Guardar_Modificar(ArregloDatos(), "exec [AceptarSolicitud] ?, ? ,? ")) {
-                Limpiar();
-                CargarDatosTabla();
+
+    private Object[][] ArregloDatosReporte() {
+        //se crea un arreglo de objetos para enviar a la clase de AccionesCrud y la funcion de Guardar_Modificar
+        Object[][] datos = new Object[1][12];
+        //se trata de obtener los datos de la tabla para mostrarlos en las casillas respectivas con ayuda de sql
+        try {
+            AccionesCrud classcrud = new AccionesCrud();
+            ResultSet rs = classcrud.ResultSetDeQuery(" SELECT * FROM [VistaReporte] where IdSolicitud=?", String.valueOf(idSolicitud));
+            while (rs.next()) {
+                System.out.print("entro");
+                datos[0][0] = rs.getString("Nombre");
+                datos[0][1] = rs.getString("CentroCosto");
+                datos[0][2] = rs.getInt("YearDiasSolicitados");
+
+                Date fechaInicio = rs.getDate("FechaInicio");
+                datos[0][3] = FuncionesSolicitudes.obtenerDia(fechaInicio);
+                datos[0][4] = FuncionesSolicitudes.obtenerMes(fechaInicio);
+                datos[0][5] = FuncionesSolicitudes.obtenerAnio(fechaInicio);
+
+                datos[0][6] = rs.getString("FechaIngreso");
+                
+                Date fechaingreso = rs.getDate("FechaIngreso");
+                datos[0][7] = FuncionesSolicitudes.calcularAniosMeses(fechaingreso);
+                datos[0][8] = rs.getInt("DiasSolicitados");
+                datos[0][9] = rs.getString("FechaInicio");
+                datos[0][10] = rs.getString("FechaFinal");
+                
+                Date fecharegreso = rs.getDate("FechaFinal");
+                datos[0][11] = FuncionesSolicitudes.aumentarUnDia(fecharegreso);
+
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(pnlSolicitudes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return datos;
+    }
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        AccionesCrud classcrud = new AccionesCrud();
+        if (classcrud.Guardar_Modificar(ArregloDatos(), "exec [AceptarSolicitud] ?, ? ,? ")) {
+            Limpiar();
+            CargarDatosTabla();
+        }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
 
+        try {
+            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("../reporte/Coffee_Landscape.jasper"));        
+     
+            JasperPrint jprint = JasperFillManager.fillReport(report, null, VacacionesDataSource.getDataSource(ArregloDatosReporte()));
+
+            JasperViewer view = new JasperViewer(jprint, false);
+            view.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            view.setVisible(true);
+
+        } catch (JRException ex) {
+            ex.getMessage();
+        }
     }//GEN-LAST:event_btnImprimirActionPerformed
 
 

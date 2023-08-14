@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +22,7 @@ public class CentroCosto extends javax.swing.JFrame {
 
         initComponents();
         CargarTabla();
+        CargarListas();
         Limpiar();
         //iniciar funcion para el icono
         Reescalado_Imagenes reescalar = new Reescalado_Imagenes();
@@ -33,6 +36,20 @@ public class CentroCosto extends javax.swing.JFrame {
     //cargar clase de validaciones
     validaciones val = new validaciones();
 
+      private void CargarListas() {
+        // Lista de JComboBox para actualizar datos
+        JComboBox[] comboBoxes = {cmbAreas};
+
+        // Recorrer cada JComboBox y eliminar los elementos
+        for (JComboBox comboBox : comboBoxes) {
+            DefaultComboBoxModel model = (DefaultComboBoxModel) comboBox.getModel();
+            model.removeAllElements();
+            model.addElement("");
+        }
+        //cargar los datos de los combobox
+        DatosTablas Datos = new DatosTablas();
+        Datos.cargarComboBox("select Area from VistaArea", "Area", cmbAreas);
+    }
     //Funcion para cargar datos a la tabla
     private void CargarTabla() {
         DatosTablas CrearTabla = new DatosTablas();
@@ -60,6 +77,7 @@ public class CentroCosto extends javax.swing.JFrame {
         txtNumero.enable(true);
         txtNombre.setText("");
         txtNumero.setText("");
+        cmbAreas.setSelectedItem("");
     }
 
     @SuppressWarnings("unchecked")
@@ -76,6 +94,10 @@ public class CentroCosto extends javax.swing.JFrame {
         btnModificar = new rsbuttom.RSButtonMetro();
         btnGuardar = new rsbuttom.RSButtonMetro();
         btnCancelar = new rsbuttom.RSButtonMetro();
+        cmbAreas = new javax.swing.JComboBox<>();
+        lblNombre1 = new javax.swing.JLabel();
+        lblErAreas = new javax.swing.JLabel();
+        lblObligatorio2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCentro = new javax.swing.JTable();
 
@@ -176,6 +198,25 @@ public class CentroCosto extends javax.swing.JFrame {
             }
         });
 
+        cmbAreas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cmbAreas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbAreasItemStateChanged(evt);
+            }
+        });
+
+        lblNombre1.setForeground(new java.awt.Color(0, 0, 0));
+        lblNombre1.setText("Area del Centro de Costo:");
+
+        lblErAreas.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        lblErAreas.setForeground(new java.awt.Color(255, 0, 0));
+        lblErAreas.setText("Error");
+
+        lblObligatorio2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblObligatorio2.setForeground(new java.awt.Color(51, 51, 51));
+        lblObligatorio2.setText("*");
+        lblObligatorio2.setToolTipText("");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -199,9 +240,17 @@ public class CentroCosto extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(lblNombre)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lblNombre1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblErAreas)
+                                    .addComponent(cmbAreas, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblObligatorio2))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -216,8 +265,15 @@ public class CentroCosto extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbAreas, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNombre1)
+                    .addComponent(lblObligatorio2, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblErAreas, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -267,7 +323,7 @@ public class CentroCosto extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -297,11 +353,12 @@ public class CentroCosto extends javax.swing.JFrame {
             PreparedStatement ps;
             ResultSet rs;
             Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT CentroCosto from [VistaCentroCosto] where [NumCentroCosto]=?");
+            ps = con.prepareStatement("SELECT CentroCosto,Area from [VistaCentroCosto] where [NumCentroCosto]=?");
             ps.setString(1, id);
             rs = ps.executeQuery();
             while (rs.next()) {
                 txtNombre.setText(rs.getString("CentroCosto"));
+                cmbAreas.setSelectedItem(rs.getString("Area"));
             }
             txtNumero.setText(id);
             txtNumero.enable(false);
@@ -317,11 +374,12 @@ public class CentroCosto extends javax.swing.JFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         //se crea un arreglo de objetos para enviar a la clase de AccionesCrud y la funcion de Guardar_Modificar
         if (Validar()) {
-            Object[] datos = new Object[2];
+            Object[] datos = new Object[3];
             datos[0] = txtNumero.getText().trim();
             datos[1] = txtNombre.getText().trim();
+            datos[2] = cmbAreas.getSelectedItem().toString();
             AccionesCrud classcrud = new AccionesCrud();
-            if (classcrud.Guardar_Modificar(datos, "exec [AgregarCentroCosto] ?, ? ")) {
+            if (classcrud.Guardar_Modificar(datos, "exec [AgregarCentroCosto] ?, ?,?")) {
                 txtNombre.setText("");
                 txtNumero.setText("");
                 CargarTabla();
@@ -333,11 +391,12 @@ public class CentroCosto extends javax.swing.JFrame {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         //se crea un arreglo de objetos para enviar a la clase de AccionesCrud y la funcion de Guardar_Modificar
         if (Validar()) {
-            Object[] datos = new Object[2];
+            Object[] datos = new Object[3];
             datos[0] = txtNumero.getText().trim();
             datos[1] = txtNombre.getText().trim();
+            datos[2] = cmbAreas.getSelectedItem().toString();
             AccionesCrud classcrud = new AccionesCrud();
-            if (classcrud.Guardar_Modificar(datos, "exec [UpdateCentroCosto] ?, ? ")) {
+            if (classcrud.Guardar_Modificar(datos, "exec [UpdateCentroCosto] ?, ?,? ")) {
                 txtNombre.setText("");
                 txtNumero.setText("");
                 CargarTabla();
@@ -365,6 +424,11 @@ public class CentroCosto extends javax.swing.JFrame {
         val.EntradaTextoNormal(txtNombre, evt, 80);
     }//GEN-LAST:event_txtNombreKeyTyped
 
+    private void cmbAreasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbAreasItemStateChanged
+        //al seleccionar un item se quita el estado de error
+        val.CMBcorrecto(cmbAreas, lblErAreas);
+    }//GEN-LAST:event_cmbAreasItemStateChanged
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -372,11 +436,15 @@ public class CentroCosto extends javax.swing.JFrame {
     private rsbuttom.RSButtonMetro btnEliminar;
     private rsbuttom.RSButtonMetro btnGuardar;
     private rsbuttom.RSButtonMetro btnModificar;
+    private javax.swing.JComboBox<String> cmbAreas;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblErAreas;
     private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblNombre1;
     private javax.swing.JLabel lblNumero;
+    private javax.swing.JLabel lblObligatorio2;
     private javax.swing.JTable tblCentro;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNumero;

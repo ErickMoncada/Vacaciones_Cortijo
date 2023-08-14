@@ -114,10 +114,10 @@
                               <Component id="txtCorreo" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
                               <Group type="102" attributes="0">
                                   <Component id="lblObligatorio" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
@@ -386,7 +386,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="N&#xfa;mero de Expediente:"/>
+            <Property name="text" type="java.lang.String" value="N&#xfa;mero de Codigo:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel10">
@@ -553,8 +553,8 @@
                 <Column editable="false" title="Usuario" type="java.lang.Object"/>
                 <Column editable="false" title="Nombre" type="java.lang.Object"/>
                 <Column editable="false" title="Correo" type="java.lang.Object"/>
-                <Column editable="false" title="Expediente" type="java.lang.Object"/>
                 <Column editable="false" title="Nivel de Acceso" type="java.lang.Object"/>
+                <Column editable="false" title="Cod. Empleado" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -604,6 +604,7 @@
     </Container>
     <Component class="javax.swing.JTextField" name="txtBuscar">
       <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtBuscarActionPerformed"/>
         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBuscarKeyReleased"/>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBuscarKeyTyped"/>
       </Events>
@@ -614,7 +615,7 @@
           <StringArray count="4">
             <StringItem index="0" value="Usuario"/>
             <StringItem index="1" value="Nombre"/>
-            <StringItem index="2" value="Expediente"/>
+            <StringItem index="2" value="Codigo"/>
             <StringItem index="3" value="Correo"/>
           </StringArray>
         </Property>
