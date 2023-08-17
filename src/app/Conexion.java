@@ -58,7 +58,7 @@ public class Conexion {
                 Connection con = DriverManager.getConnection(url);
                 return con;
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "No se pudo Contactar con la base de datos, Solicite ayuda a su superior", "Telefónia Cortijo", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "No se pudo Contactar con la base de datos, Solicite ayuda a su superior", "Vacaciones Cortijo", JOptionPane.ERROR_MESSAGE);
                 return null;
             }
         } else {

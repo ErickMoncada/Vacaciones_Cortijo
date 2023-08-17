@@ -4,11 +4,15 @@ import Clases.AccionesCrud;
 import Clases.DatosTablas;
 import Clases.FuncionesSolicitudes;
 import Clases.validaciones;
+import app.Conexion;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -19,6 +23,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import org.apache.log4j.xml.DOMConfigurator;
 import reporte.VacacionesDataSource;
 
 /**
@@ -26,20 +31,28 @@ import reporte.VacacionesDataSource;
  */
 public class pnlSolicitudes extends javax.swing.JPanel {
 
-    public pnlSolicitudes() {
+    public pnlSolicitudes(Object[] datosUsuario) {
         initComponents();
+        idNivel = (int) datosUsuario[0];
+        if (datosUsuario[1] instanceof String) {
+            cc = Integer.parseInt((String) datosUsuario[1]);
+        } else if (datosUsuario[1] instanceof Integer) {
+            cc = (Integer) datosUsuario[1];
+        }
+        areaempleado = (int) datosUsuario[2];
+        areacc = (int) datosUsuario[3];
+        codigoempleado = (int) datosUsuario[4];
         CargarDatosPrincipal();
         Limpiar();
         //---------------------------------se establece que no se pueda pegar texto en los campos
         val.NegarPegado(txtBuscar);
         //------------------------------------------------------------------------------
+        //ocultar boton de aceptar 
+        btnAceptar.setVisible(false);
 
     }
-    int idNivel = 6;
-    int cc = 0;
-    int areaempleado = 0;
-    int areacc = 0;
-    int codigoempleado = 1;
+    //datos del usuario activo en la aplicacion
+    int idNivel, cc, areaempleado, areacc, codigoempleado;
     //inicializar variable del id de la solicitud
     int idSolicitud;
     //inicializar variable del codigo del empleado
@@ -61,12 +74,19 @@ public class pnlSolicitudes extends javax.swing.JPanel {
     private void CargarDatosTabla() {
         //rellenar datos de la tabla
         DatosTablas Datos = new DatosTablas();
+        
         if (cc == 0 && areaempleado != 0) {
+            //datos que veran los gerentes
             Datos.CargarTabla(tblEquipos, "select * from VistaSolicitudes where IdNivel<" + idNivel + " and AreaCC=" + areaempleado + " and " + Busqueda + " LIKE '%" + txtBuscar.getText() + "%' and Estado=3");
-        } else if (cc == 0 && areaempleado == 0) {
+        } else if (cc == 0 && areaempleado == 0 && idNivel == 6) {
+            //datos que vera el gerente general
+            Datos.CargarTabla(tblEquipos, "select * from VistaSolicitudes where IdNivel<=" + idNivel + "  and " + Busqueda + " LIKE '%" + txtBuscar.getText() + "%' and Estado=3 ");
+        } else if (cc == 0 && areaempleado == 0 && idNivel == 7) {
+           //datos que puede ver el director de la empresa con el nivel 7 de acceso
             Datos.CargarTabla(tblEquipos, "select * from VistaSolicitudes where IdNivel<" + idNivel + "  and " + Busqueda + " LIKE '%" + txtBuscar.getText() + "%' and Estado=3 or CodEmpleado=" + codigoempleado + " and " + Busqueda + "  LIKE '%" + txtBuscar.getText() + "%' and Estado=3");
         } else {
-            Datos.CargarTabla(tblEquipos, "select * from VistaEmpleados where IdNivel<" + idNivel + " and NumCentroCosto=" + cc + " and " + Busqueda + " LIKE '%" + txtBuscar.getText() + "%' or CodEmpleado=" + codigoempleado + " and " + Busqueda + "  LIKE '%" + txtBuscar.getText() + "%'");
+            //datos que veran los de rango menor
+            Datos.CargarTabla(tblEquipos, "select * from VistaSolicitudes where IdNivel<" + idNivel + " and NumCentroCosto=" + cc + " and " + Busqueda + " LIKE '%" + txtBuscar.getText() + "%' and Estado=3 ");
         }
     }
 
@@ -303,7 +323,9 @@ public class pnlSolicitudes extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1352, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1406, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel2)
@@ -341,6 +363,7 @@ public class pnlSolicitudes extends javax.swing.JPanel {
                 DiasSolicitados = (rs.getInt("Dias"));
                 CodEmpleado = (rs.getInt("CodEmpleado"));
                 idSolicitud = (rs.getInt("IdSolicitud"));
+                btnAceptar.setVisible(false);
             }
         } catch (SQLException ex) {
             Logger.getLogger(pnlSolicitudes.class.getName()).log(Level.SEVERE, null, ex);
@@ -413,41 +436,6 @@ public class pnlSolicitudes extends javax.swing.JPanel {
         return datos;
     }
 
-    private Object[][] ArregloDatosReporte() {
-        //se crea un arreglo de objetos para enviar a la clase de AccionesCrud y la funcion de Guardar_Modificar
-        Object[][] datos = new Object[1][12];
-        //se trata de obtener los datos de la tabla para mostrarlos en las casillas respectivas con ayuda de sql
-        try {
-            AccionesCrud classcrud = new AccionesCrud();
-            ResultSet rs = classcrud.ResultSetDeQuery(" SELECT * FROM [VistaReporte] where IdSolicitud=?", String.valueOf(idSolicitud));
-            while (rs.next()) {
-                System.out.print("entro");
-                datos[0][0] = rs.getString("Nombre");
-                datos[0][1] = rs.getString("CentroCosto");
-                datos[0][2] = rs.getInt("YearDiasSolicitados");
-
-                Date fechaInicio = rs.getDate("FechaInicio");
-                datos[0][3] = FuncionesSolicitudes.obtenerDia(fechaInicio);
-                datos[0][4] = FuncionesSolicitudes.obtenerMes(fechaInicio);
-                datos[0][5] = FuncionesSolicitudes.obtenerAnio(fechaInicio);
-
-                datos[0][6] = rs.getString("FechaIngreso");
-                
-                Date fechaingreso = rs.getDate("FechaIngreso");
-                datos[0][7] = FuncionesSolicitudes.calcularAniosMeses(fechaingreso);
-                datos[0][8] = rs.getInt("DiasSolicitados");
-                datos[0][9] = rs.getString("FechaInicio");
-                datos[0][10] = rs.getString("FechaFinal");
-                
-                Date fecharegreso = rs.getDate("FechaFinal");
-                datos[0][11] = FuncionesSolicitudes.aumentarUnDia(fecharegreso);
-
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(pnlSolicitudes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return datos;
-    }
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         AccionesCrud classcrud = new AccionesCrud();
@@ -457,18 +445,68 @@ public class pnlSolicitudes extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-
+    private String FechaFormateada(Date nuevaFecha){
+    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        String nuevaFechaFormateada = formatoFecha.format(nuevaFecha);
+        return nuevaFechaFormateada;
+    }
+    private HashMap ArregloDatosReporte() {
+        HashMap parametros = new HashMap();
+        parametros.put("id", String.valueOf(idSolicitud));
+        //se trata de obtener los datos de la tabla para mostrarlos en las casillas respectivas con ayuda de sql
         try {
-            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("../reporte/Coffee_Landscape.jasper"));        
-     
-            JasperPrint jprint = JasperFillManager.fillReport(report, null, VacacionesDataSource.getDataSource(ArregloDatosReporte()));
-
+            AccionesCrud classcrud = new AccionesCrud();
+            ResultSet rs = classcrud.ResultSetDeQuery(" SELECT * FROM [VistaReporte] where IdSolicitud=?", String.valueOf(idSolicitud));
+            while (rs.next()) {
+                parametros.put("CentroCosto", rs.getString("CentroCosto"));          
+                
+                switch( rs.getString("YearDiasSolicitados")){
+                    case "1":
+                         parametros.put("YearDiasSolicitados", "Primer Año");
+                         break;
+                         case "2":
+                         parametros.put("YearDiasSolicitados", "Segundo Año");
+                         break;
+                         case "3":
+                         parametros.put("YearDiasSolicitados", "Tercer Año");
+                         break;
+                         case "4":
+                         parametros.put("YearDiasSolicitados", "Cuarto Año en adelante");
+                         break;
+            }
+                Date fechaInicio = rs.getDate("FechaInicio");
+                parametros.put("DiaInicio", FuncionesSolicitudes.obtenerDia(fechaInicio));
+                parametros.put("MesInicio", FuncionesSolicitudes.obtenerMes(fechaInicio));
+                parametros.put("AnioInicio", FuncionesSolicitudes.obtenerAnio(fechaInicio));
+                parametros.put("FechaIngreso", FechaFormateada(rs.getDate("FechaIngreso")));
+                Date fechaingreso = rs.getDate("FechaIngreso");
+                parametros.put("TiempoLaborando",  FuncionesSolicitudes.calcularAniosMeses(fechaingreso));
+                parametros.put("DiasSolicitados",  rs.getString("DiasSolicitados"));
+                
+                
+                parametros.put("FechaInicio",  FechaFormateada(rs.getDate("FechaInicio")));
+                parametros.put("FechaFinal",  FechaFormateada(rs.getDate("FechaFinal")));
+                Date fecharegreso = rs.getDate("FechaFinal");
+                parametros.put("FechaRegreso",  FuncionesSolicitudes.aumentarUnDia(fecharegreso));
+            }
+        } catch (SQLException ex) {
+            System.out.print(ex);
+        }
+        return parametros;
+    }
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        try {
+            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("../reporte/report1.jasper"));
+            Connection con = Conexion.getConexion();
+            JasperPrint jprint = JasperFillManager.fillReport(report, ArregloDatosReporte(), con);
+            System.out.print("vamos aqiuio2");
             JasperViewer view = new JasperViewer(jprint, false);
             view.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             view.setVisible(true);
+            btnAceptar.setVisible(true);
 
         } catch (JRException ex) {
+            System.out.print("\nerror");
             ex.getMessage();
         }
     }//GEN-LAST:event_btnImprimirActionPerformed

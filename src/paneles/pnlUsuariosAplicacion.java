@@ -680,7 +680,7 @@ public class pnlUsuariosAplicacion extends javax.swing.JPanel {
                 val.EntradaSoloLetas(txtBuscar, evt, 80);
                 break;
             case "Codigo":
-                val.EntradaNumeros(txtBuscar, evt, 4);
+                val.EntradaNumeros(txtBuscar, evt, 7);
                 break;
             case "Correo":
                 val.EntradaCorreo(txtBuscar, evt);
@@ -702,7 +702,7 @@ public class pnlUsuariosAplicacion extends javax.swing.JPanel {
 
     private void txtExpedienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtExpedienteKeyTyped
         // validado para un campo de tipo linea telefonica
-        val.EntradaNumeros(txtExpediente, evt, 4);
+        val.EntradaNumeros(txtExpediente, evt, 7);
     }//GEN-LAST:event_txtExpedienteKeyTyped
 
     private void txtExpedienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtExpedienteKeyReleased

@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,8 +21,19 @@ import javax.swing.table.DefaultTableModel;
  */
 public class pnlSolicitar extends javax.swing.JPanel {
 
-    public pnlSolicitar() {
+    public pnlSolicitar(Object[] datosUsuario) {
         initComponents();
+
+        idNivel = (int) datosUsuario[0];
+        if (datosUsuario[1] instanceof String) {
+            cc = Integer.parseInt((String) datosUsuario[1]);
+        } else if (datosUsuario[1] instanceof Integer) {
+            cc = (Integer) datosUsuario[1];
+        }
+        areaempleado = (int) datosUsuario[2];
+        areacc = (int) datosUsuario[3];
+        codigoempleado = (int) datosUsuario[4];
+
         CargarDatosPrincipal();
         Limpiar();
         asignarEventos();
@@ -29,13 +41,12 @@ public class pnlSolicitar extends javax.swing.JPanel {
         //---------------------------------se establece que no se pueda pegar texto en los campos
         val.NegarPegado(txtBuscar);
         //------------------------------------------------------------------------------
+
     }
 
-    int idNivel = 6;
-    int cc = 0;
-    int areaempleado = 0;
-    int areacc = 0;
-    int codigoempleado = 1;
+    //datos del usuario activo en la aplicacion
+    int idNivel, cc, areaempleado, areacc, codigoempleado;
+
     int year1 = 0, year2 = 0, year3 = 0, year4 = 0;
     int yearseleccionado;
 
@@ -58,7 +69,6 @@ public class pnlSolicitar extends javax.swing.JPanel {
         btnSolicitar.setVisible(false);
         lblDiasDisponibles.setVisible(false);
 
-        LimpiarErrores();
     }
 
     private void asignarEventos() {
@@ -67,19 +77,23 @@ public class pnlSolicitar extends javax.swing.JPanel {
     }
 
     private void CargarTabla() {
-        //rellenar datos de la tabla
+
+//rellenar datos de la tabla
         DatosTablas Datos = new DatosTablas();
         if (cc == 0 && areaempleado != 0) {
-            Datos.CargarTabla(tblUsuarios, "select * from VistaEmpleados where IdNivel<" + idNivel + "and AreaCC=" + areaempleado + "or CodEmpleado=" + codigoempleado);
+            Datos.CargarTabla(tblUsuarios, "select * from VistaEmpleados where IdNivel<" + idNivel + " and AreaCC=" + areaempleado + " and " + Busqueda + " LIKE '%" + txtBuscar.getText() + "%' or CodEmpleado=" + codigoempleado + " and " + Busqueda + "  LIKE '%" + txtBuscar.getText() + "%'");
+        } else if (cc == 0 && areaempleado == 0 && idNivel == 6) {
+            Datos.CargarTabla(tblUsuarios, "select * from VistaEmpleados where IdNivel<=" + idNivel + "  and " + Busqueda + " LIKE '%" + txtBuscar.getText() + "%' or CodEmpleado=" + codigoempleado + " and " + Busqueda + "  LIKE '%" + txtBuscar.getText() + "%'");
         } else if (cc == 0 && areaempleado == 0) {
-            Datos.CargarTabla(tblUsuarios, "select * from VistaEmpleados where IdNivel<" + idNivel + "or CodEmpleado=" + codigoempleado);
+            Datos.CargarTabla(tblUsuarios, "select * from VistaEmpleados where IdNivel<" + idNivel + "  and " + Busqueda + " LIKE '%" + txtBuscar.getText() + "%' or CodEmpleado=" + codigoempleado + " and " + Busqueda + "  LIKE '%" + txtBuscar.getText() + "%'");
         } else {
-            Datos.CargarTabla(tblUsuarios, "select * from VistaEmpleados where IdNivel<" + idNivel + "and NumCentroCosto=" + cc + "or CodEmpleado=" + codigoempleado);
+            Datos.CargarTabla(tblUsuarios, "select * from VistaEmpleados where IdNivel<" + idNivel + " and NumCentroCosto=" + cc + " and " + Busqueda + " LIKE '%" + txtBuscar.getText() + "%' or CodEmpleado=" + codigoempleado + " and " + Busqueda + "  LIKE '%" + txtBuscar.getText() + "%'");
         }
     }
 
     private void CargarDatosPrincipal() {
-        //rellenar datos de la tabla
+
+//rellenar datos de la tabla
         CargarTabla();
         //obtener la hora del servidor para poner de limite
         try {
@@ -98,20 +112,6 @@ public class pnlSolicitar extends javax.swing.JPanel {
         }
     }
 
-    private void CargarListas() {
-        // Lista de JComboBox para actualizar datos
-
-        // Recorrer cada JComboBox y eliminar los elementos
-        //cargar los datos de los combobox
-        DatosTablas Datos = new DatosTablas();
-
-    }
-
-    private void LimpiarErrores() {
-        //usando la clase de validaciones se establecen los valores en correcto
-
-    }
-
     private boolean ValidarCampos() {
         int valor = 1;
         Date date1 = dtpInicio.getDate();
@@ -121,21 +121,27 @@ public class pnlSolicitar extends javax.swing.JPanel {
             // date1 es posterior a date2
             JOptionPane.showMessageDialog(null, "La fecha de inicio tiene que ser antes de la fecha final", "Error en las fechas", JOptionPane.ERROR_MESSAGE);
             valor = 0;
-        }else{
-        try {
-            int diasSolicitados = Integer.parseInt(txtDiasSolicitados.getText());
-            // Comparar las fechas y verificar si el rango de días es mayor o igual a los días solicitados
-            if (date1.compareTo(date2) <= 0 && daysBetween(date1, date2) >= diasSolicitados-1) {
-                
-            } else {
-                JOptionPane.showMessageDialog(null, "El rango de días de las fechas debe ser mayor o igual a los días solicitados", "Error en las fechas", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                int diasSolicitados = Integer.parseInt(txtDiasSolicitados.getText());
+                // Comparar las fechas y verificar si el rango de días es mayor o igual a los días solicitados
+                if (date1.compareTo(date2) <= 0 && daysBetween(date1, date2) >= diasSolicitados - 1) {
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "El rango de días de las fechas debe ser mayor o igual a los días solicitados", "Error en las fechas", JOptionPane.ERROR_MESSAGE);
+                    valor = 0;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Ingrese un valor numérico válido para los días solicitados", "Error en los datos", JOptionPane.ERROR_MESSAGE);
                 valor = 0;
             }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Ingrese un valor numérico válido para los días solicitados", "Error en los datos", JOptionPane.ERROR_MESSAGE);
-            valor = 0;
-        }}
+        }
 
+         if (Integer.parseInt(txtDiasSolicitados.getText())>Integer.parseInt((lblDiasDisponibles.getText()).substring(18))) {
+            // date1 es posterior a date2
+            JOptionPane.showMessageDialog(null, "Los dias Solicitados no pueden superar el limite de los dias disponibles", "Error en las fechas", JOptionPane.ERROR_MESSAGE);
+            valor = 0;
+        } 
         return valor == 1; //Expreciones regulares de los campos
     }
     // Método para calcular la diferencia en días entre dos fechas
@@ -383,17 +389,18 @@ public class pnlSolicitar extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(panelSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
+                        .addGap(12, 12, 12)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -405,10 +412,10 @@ public class pnlSolicitar extends javax.swing.JPanel {
                             .addComponent(jLabel2)
                             .addComponent(cmbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(9, 9, 9)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 783, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panelSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -439,7 +446,6 @@ public class pnlSolicitar extends javax.swing.JPanel {
         return datos;
     }
     private void btnSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarActionPerformed
-        LimpiarErrores();
         if (ValidarCampos()) {
             AccionesCrud classcrud = new AccionesCrud();
             if (classcrud.Guardar_Modificar(ArregloDatos(), "exec [HacerSolicitud] ?, ? ,?  ,? ,? ,?")) {
@@ -473,15 +479,7 @@ public class pnlSolicitar extends javax.swing.JPanel {
         DefaultTableModel modelo = (DefaultTableModel) tblUsuarios.getModel();
         modelo.setRowCount(0);
         //se muestra los resultados de la busqueda
-        //rellenar datos de la tabla
-        DatosTablas Datos = new DatosTablas();
-        if (cc == 0 && areaempleado != 0) {
-            Datos.CargarTabla(tblUsuarios, "select * from VistaEmpleados where IdNivel<" + idNivel + " and AreaCC=" + areaempleado + " and " + Busqueda + " LIKE '%" + txtBuscar.getText() + "%' or CodEmpleado=" + codigoempleado + " and " + Busqueda + "  LIKE '%" + txtBuscar.getText() + "%'");
-        } else if (cc == 0 && areaempleado == 0) {
-            Datos.CargarTabla(tblUsuarios, "select * from VistaEmpleados where IdNivel<" + idNivel + "  and " + Busqueda + " LIKE '%" + txtBuscar.getText() + "%' or CodEmpleado=" + codigoempleado + " and " + Busqueda + "  LIKE '%" + txtBuscar.getText() + "%'");
-        } else {
-            Datos.CargarTabla(tblUsuarios, "select * from VistaEmpleados where IdNivel<" + idNivel + " and NumCentroCosto=" + cc + " and " + Busqueda + " LIKE '%" + txtBuscar.getText() + "%' or CodEmpleado=" + codigoempleado + " and " + Busqueda + "  LIKE '%" + txtBuscar.getText() + "%'");
-        }
+        CargarTabla();
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -491,10 +489,10 @@ public class pnlSolicitar extends javax.swing.JPanel {
 
     private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
         switch (Busqueda) {
-            case "CodigoEmpleado":
-                val.EntradaNumeros(txtBuscar, evt, 5);
+            case "CodEmpleado":
+                val.EntradaNumeros(txtBuscar, evt, 7);
                 break;
-            case "Nombre":
+            case "NombreCompleto":
                 val.EntradaSoloLetas(txtBuscar, evt, 80);
                 break;
             default:
@@ -513,11 +511,7 @@ public class pnlSolicitar extends javax.swing.JPanel {
     private void tblUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMouseClicked
         Limpiar();
         cmbYearDiasSolicitados.setSelectedItem(" ");
-        /*
-        int fila = tblUsuarios.getSelectedRow();
-        int indiceColumna = tblUsuarios.getColumnModel().getColumnIndex("Cod. Empleado");
-        String nivel = tblUsuarios.getValueAt(fila, indiceColumna).toString();*/
-
+     
         //se trata de obtener los datos de la tabla para mostrarlos en las casillas respectivas con ayuda de sql
         try {
             AccionesCrud classcrud = new AccionesCrud();

@@ -23,7 +23,7 @@ public class Principal extends javax.swing.JFrame {
     //Se inicializa la variable de nivel de acceso
     String NivelDeAcceso;
 
-    public Principal(String NIVEL, String NOMBRE) {
+    public Principal(String NIVEL, String NOMBRE,Object[] datosusuario) {
         initComponents();
         //se Recive el nivel de aceso a travez del login y se asigna a una variable global
         NivelDeAcceso = NIVEL;
@@ -32,7 +32,7 @@ public class Principal extends javax.swing.JFrame {
         this.btnSolicitar.setColorNormal(new Color(239, 238, 244));
         this.btnSolicitudes.setColorNormal(new Color(239, 238, 244));
         this.btnUsuariosApp.setColorNormal(new Color(239, 238, 244));
-        this.btnCruds.setColorNormal(new Color(239, 238, 244));
+        this.btnAjustes.setColorNormal(new Color(239, 238, 244));
         //iniciar funcion para el icono
         setIconImage(reescalar.getIconImage());
         //Iniciar funcion para iconos del submenu , titulo y boton salir
@@ -43,17 +43,21 @@ public class Principal extends javax.swing.JFrame {
         if ("Lector".equals(NIVEL)) {
             btnUsuariosApp.setVisible(false);
             lblAplicacion.setVisible(false);
+            btnAjustes.setVisible(false);
         }
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(this);
+        datos=datosusuario;
     }
+    Object[] datos=new Object[5];
     //se inicia la clase para reescalar imagenes
     Reescalado_Imagenes reescalar = new Reescalado_Imagenes();
 
     //asignar los iconos de cada submenu , titulo y boton de salir
     private void IconosBarraLateral() {
-        btnSolicitar.setIcon(reescalar.IconoTextoMenu(50, 50, "img1/agregar-usuario.png"));
-        btnSolicitudes.setIcon(reescalar.IconoTextoMenu(50, 50, "img1/equipos.png"));
+        btnSolicitar.setIcon(reescalar.IconoTextoMenu(50, 50, "img1/solicitar.png"));
+        btnSolicitudes.setIcon(reescalar.IconoTextoMenu(50, 50, "img1/solicitudes.png"));
+        btnAjustes.setIcon(reescalar.IconoTextoMenu(50, 50, "img1/ajustes.png"));
         lblTituloTelefonia.setIcon(reescalar.IconoTextoMenu(50, 50, "img1/Pollos-El-Cortijo.png"));
         btnSalir.setIcon(reescalar.IconoTextoMenu(40, 40, "img1/cerrar-sesion.png"));
         btnUsuariosApp.setIcon(reescalar.IconoTextoMenu(40, 40, "img1/perfil.png"));
@@ -88,7 +92,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         lblAplicacion = new javax.swing.JLabel();
         btnUsuariosApp = new rsbuttom.RSButtonMetro();
-        btnCruds = new rsbuttom.RSButtonMetro();
+        btnAjustes = new rsbuttom.RSButtonMetro();
         pnlCentro = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         lblHora = new javax.swing.JLabel();
@@ -100,7 +104,7 @@ public class Principal extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Telefonía - Cortijo");
+        setTitle("Vacaciones - Cortijo");
         setMinimumSize(new java.awt.Dimension(700, 700));
         setSize(new java.awt.Dimension(1450, 700));
 
@@ -139,7 +143,7 @@ public class Principal extends javax.swing.JFrame {
 
         lblTelefonia.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         lblTelefonia.setForeground(new java.awt.Color(128, 128, 131));
-        lblTelefonia.setText("TELEFONÍA");
+        lblTelefonia.setText("VACACIONES");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -160,7 +164,7 @@ public class Principal extends javax.swing.JFrame {
 
         btnSolicitudes.setBackground(new java.awt.Color(239, 238, 244));
         btnSolicitudes.setForeground(new java.awt.Color(128, 128, 131));
-        btnSolicitudes.setText("Solicitudes de Vacaciones");
+        btnSolicitudes.setText("Solicitudes de \nVacaciones");
         btnSolicitudes.setColorHover(new java.awt.Color(204, 204, 204));
         btnSolicitudes.setColorNormal(new java.awt.Color(239, 238, 244));
         btnSolicitudes.setColorPressed(new java.awt.Color(204, 204, 204));
@@ -172,6 +176,7 @@ public class Principal extends javax.swing.JFrame {
         btnSolicitudes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnSolicitudes.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnSolicitudes.setIconTextGap(25);
+        btnSolicitudes.setLabel("<html>Solicitudes de </br> Vacaciones </html>");
         btnSolicitudes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnSolicitudesMousePressed(evt);
@@ -232,28 +237,28 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnCruds.setBackground(new java.awt.Color(239, 238, 244));
-        btnCruds.setForeground(new java.awt.Color(128, 128, 131));
-        btnCruds.setText("CRUDS");
-        btnCruds.setColorHover(new java.awt.Color(204, 204, 204));
-        btnCruds.setColorNormal(new java.awt.Color(239, 238, 244));
-        btnCruds.setColorPressed(new java.awt.Color(204, 204, 204));
-        btnCruds.setColorTextHover(new java.awt.Color(128, 128, 131));
-        btnCruds.setColorTextNormal(new java.awt.Color(128, 128, 131));
-        btnCruds.setColorTextPressed(new java.awt.Color(128, 128, 131));
-        btnCruds.setFocusable(false);
-        btnCruds.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnCruds.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnCruds.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btnCruds.setIconTextGap(25);
-        btnCruds.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAjustes.setBackground(new java.awt.Color(239, 238, 244));
+        btnAjustes.setForeground(new java.awt.Color(128, 128, 131));
+        btnAjustes.setColorHover(new java.awt.Color(204, 204, 204));
+        btnAjustes.setColorNormal(new java.awt.Color(239, 238, 244));
+        btnAjustes.setColorPressed(new java.awt.Color(204, 204, 204));
+        btnAjustes.setColorTextHover(new java.awt.Color(128, 128, 131));
+        btnAjustes.setColorTextNormal(new java.awt.Color(128, 128, 131));
+        btnAjustes.setColorTextPressed(new java.awt.Color(128, 128, 131));
+        btnAjustes.setFocusable(false);
+        btnAjustes.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnAjustes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnAjustes.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnAjustes.setIconTextGap(25);
+        btnAjustes.setLabel("Ajustes");
+        btnAjustes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnCrudsMousePressed(evt);
+                btnAjustesMousePressed(evt);
             }
         });
-        btnCruds.addActionListener(new java.awt.event.ActionListener() {
+        btnAjustes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCrudsActionPerformed(evt);
+                btnAjustesActionPerformed(evt);
             }
         });
 
@@ -274,7 +279,7 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(pnlMenuLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnCruds, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAjustes, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlMenuLayout.setVerticalGroup(
@@ -283,16 +288,18 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(btnSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSolicitudes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(144, 144, 144)
+                .addGap(138, 138, 138)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnUsuariosApp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCruds, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAjustes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        btnAjustes.getAccessibleContext().setAccessibleName("Ajustes");
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -375,7 +382,7 @@ public class Principal extends javax.swing.JFrame {
         lblTituloTelefonia.setBackground(new java.awt.Color(255, 255, 255));
         lblTituloTelefonia.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         lblTituloTelefonia.setForeground(new java.awt.Color(255, 255, 255));
-        lblTituloTelefonia.setText("Telefonía - Cortijo");
+        lblTituloTelefonia.setText("Vacaciones - Cortijo");
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img1/cerrar-sesion.png"))); // NOI18N
         btnSalir.setBorder(null);
@@ -396,7 +403,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btnMenu)
                 .addGap(18, 18, 18)
                 .addComponent(lblTituloTelefonia)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1185, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1170, Short.MAX_VALUE)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -431,17 +438,19 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        getAccessibleContext().setAccessibleName("Vacaciones - Cortijo");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     //Genera la accion para cambiar de panel USUARIOS llamando a la clase del paquete paneles y cambia los colores de los que se seleccionaron antes
     private void btnSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarActionPerformed
-        new CambiaPanel(pnlPrincipal, new paneles.pnlSolicitar());
+        new CambiaPanel(pnlPrincipal, new paneles.pnlSolicitar(datos));
         if (this.btnSolicitar.isSelected()) {
             this.btnSolicitar.setColorNormal(new Color(204, 204, 204));
             this.btnSolicitudes.setColorNormal(new Color(239, 238, 244));
             this.btnUsuariosApp.setColorNormal(new Color(239, 238, 244));
-            this.btnCruds.setColorNormal(new Color(239, 238, 244));
+            this.btnAjustes.setColorNormal(new Color(239, 238, 244));
         } else {
             this.btnSolicitar.setColorNormal(new Color(239, 238, 244));
         }
@@ -452,7 +461,7 @@ public class Principal extends javax.swing.JFrame {
         this.btnSolicitar.setSelected(true);
         this.btnSolicitudes.setSelected(false);
         this.btnUsuariosApp.setSelected(false);
-        this.btnCruds.setSelected(false);
+        this.btnAjustes.setSelected(false);
     }//GEN-LAST:event_btnSolicitarMousePressed
 
     //Establecer el estado de seleccionado al correspondiente boton y los demas con el estado desactivado
@@ -460,16 +469,16 @@ public class Principal extends javax.swing.JFrame {
         this.btnSolicitar.setSelected(false);
         this.btnSolicitudes.setSelected(true);
         this.btnUsuariosApp.setSelected(false);
-        this.btnCruds.setSelected(false);
+        this.btnAjustes.setSelected(false);
     }//GEN-LAST:event_btnSolicitudesMousePressed
 
     //Genera la accion para cambiar de panel llamando a la clase del paquete paneles y cambia los colores de los que se seleccionaron antes
     private void btnSolicitudesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitudesActionPerformed
-        new CambiaPanel(pnlPrincipal, new paneles.pnlSolicitudes());
+        new CambiaPanel(pnlPrincipal, new paneles.pnlSolicitudes(datos));
         if (this.btnSolicitudes.isSelected()) {
             this.btnSolicitudes.setColorNormal(new Color(204, 204, 204));
             this.btnSolicitar.setColorNormal(new Color(239, 238, 244));
-            this.btnCruds.setColorNormal(new Color(239, 238, 244));
+            this.btnAjustes.setColorNormal(new Color(239, 238, 244));
             this.btnUsuariosApp.setColorNormal(new Color(239, 238, 244));
         } else {
             this.btnSolicitudes.setColorNormal(new Color(239, 238, 244));
@@ -494,7 +503,7 @@ public class Principal extends javax.swing.JFrame {
         this.btnSolicitar.setSelected(false);
         this.btnSolicitudes.setSelected(false);
         this.btnUsuariosApp.setSelected(true);
-        this.btnCruds.setSelected(false);
+        this.btnAjustes.setSelected(false);
     }//GEN-LAST:event_btnUsuariosAppMousePressed
 
     //Genera la accion para cambiar de panel llamando a la clase del paquete paneles y cambia los colores de los que se seleccionaron antes
@@ -503,7 +512,7 @@ public class Principal extends javax.swing.JFrame {
         if (this.btnUsuariosApp.isSelected()) {
             this.btnSolicitar.setColorNormal(new Color(239, 238, 244));
             this.btnSolicitudes.setColorNormal(new Color(239, 238, 244));
-            this.btnCruds.setColorNormal(new Color(239, 238, 244));
+            this.btnAjustes.setColorNormal(new Color(239, 238, 244));
             this.btnUsuariosApp.setColorNormal(new Color(204, 204, 204));
         } else {
             this.btnSolicitudes.setColorNormal(new Color(239, 238, 244));
@@ -545,27 +554,27 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void btnCrudsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrudsMousePressed
+    private void btnAjustesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAjustesMousePressed
         this.btnSolicitar.setSelected(false);
         this.btnSolicitudes.setSelected(false);
         this.btnUsuariosApp.setSelected(false);
-        this.btnCruds.setSelected(true);
-    }//GEN-LAST:event_btnCrudsMousePressed
+        this.btnAjustes.setSelected(true);
+    }//GEN-LAST:event_btnAjustesMousePressed
 
-    private void btnCrudsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrudsActionPerformed
+    private void btnAjustesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjustesActionPerformed
          new CambiaPanel(pnlPrincipal, new paneles.pnlCruds());
-        if (this.btnCruds.isSelected()) {
-            this.btnCruds.setColorNormal(new Color(204, 204, 204));
+        if (this.btnAjustes.isSelected()) {
+            this.btnAjustes.setColorNormal(new Color(204, 204, 204));
             this.btnSolicitudes.setColorNormal(new Color(239, 238, 244));
             this.btnUsuariosApp.setColorNormal(new Color(239, 238, 244));
             this.btnSolicitar.setColorNormal(new Color(239, 238, 244));
         } else {
             this.btnSolicitar.setColorNormal(new Color(239, 238, 244));
         }
-    }//GEN-LAST:event_btnCrudsActionPerformed
+    }//GEN-LAST:event_btnAjustesActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private rsbuttom.RSButtonMetro btnCruds;
+    private rsbuttom.RSButtonMetro btnAjustes;
     private javax.swing.JButton btnMenu;
     private javax.swing.JButton btnSalir;
     private rsbuttom.RSButtonMetro btnSolicitar;

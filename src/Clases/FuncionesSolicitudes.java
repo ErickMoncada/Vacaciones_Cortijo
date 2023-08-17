@@ -69,7 +69,7 @@ public class FuncionesSolicitudes {
 
     return anios + " Años, " + meses + " Meses";
 }
-     public static Date aumentarUnDia(Date fecha) {
+     public static String aumentarUnDia(Date fecha) {
         // Crea un objeto Calendar y configúralo con la fecha dada
         Calendar calendario = Calendar.getInstance();
         calendario.setTime(fecha);
@@ -79,6 +79,23 @@ public class FuncionesSolicitudes {
 
         // Obtén la nueva fecha
         Date nuevaFecha = calendario.getTime();
-        return nuevaFecha;
+        
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        String nuevaFechaFormateada = formatoFecha.format(nuevaFecha);
+        return nuevaFechaFormateada;
     }
+     
+      public  Date RestarAnios(Date fecha, int years) {
+    // Crea un objeto Calendar y configúralo con la fecha dada
+    Calendar calendario = Calendar.getInstance();
+    calendario.setTime(fecha);
+
+    // Resta los años especificados
+    calendario.add(Calendar.YEAR, -years);
+
+    // Obtén la nueva fecha
+    Date nuevaFecha = calendario.getTime();
+    return nuevaFecha;
+}
+
 }

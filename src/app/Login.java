@@ -1,5 +1,6 @@
 package app;
 
+import Clases.AccionesCrud;
 import Clases.Password;
 import Clases.Reescalado_Imagenes;
 import Clases.validaciones;
@@ -7,6 +8,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import javax.swing.JOptionPane;
@@ -272,6 +274,43 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private Object[] ArregloDatos(){
+    String usuario=txtUsuario.getText().trim();
+    Object[] datos = new Object[5];
+        try {
+            AccionesCrud classcrud = new AccionesCrud();
+            ResultSet rs;
+
+            rs = classcrud.ResultSetDeQuery("select IdNivel,NumCentroCosto,AreaEmpleado,AreaCC,CodEmpleado from [VistaEmpleados] where [Usuario]=?", usuario);
+            while (rs.next()) {
+                datos[0]=rs.getInt("IdNivel");
+                
+                if(rs.getString("NumCentroCosto")==null){
+                datos[1]=0;
+                }else{
+                datos[1]=rs.getString("NumCentroCosto");
+                }
+                
+                if(rs.getString("AreaEmpleado")==null){
+                datos[2]=0;
+                }else{
+                datos[2]=rs.getInt("AreaEmpleado");
+                }
+                
+                if(rs.getString("AreaCC")==null){
+                datos[3]=0;
+                }else{
+                datos[3]=rs.getInt("AreaCC");
+                }
+
+                datos[4]=rs.getInt("CodEmpleado");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+        return datos;
+    }
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         Password rec = new Password();
         if(ValidarCampos()){
@@ -296,7 +335,7 @@ public class Login extends javax.swing.JFrame {
                 //Comprobar si es administrador o lector
                if("Administrador".equals(NivelAcceso) || "Lector".equals(NivelAcceso) || "Root".equals(NivelAcceso)){
                 //Abrir Formulario de Menu Principal y se manda el nivel de Acceso
-                Principal MenuFrame = new Principal(NivelAcceso,Nombre);
+                Principal MenuFrame = new Principal(NivelAcceso,Nombre,ArregloDatos());
                 MenuFrame.setVisible(true);
                 MenuFrame.pack();
                 MenuFrame.setLocationRelativeTo(null);

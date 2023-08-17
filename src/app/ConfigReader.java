@@ -16,7 +16,7 @@ public class ConfigReader {
             properties.load(inputStream);
             return properties;
         } catch (IOException e) {
-             JOptionPane.showMessageDialog(null, "no se pudo encontrar el archivo de Configuracion a la conexion de base de datos", "Telefonia Cortijo",JOptionPane.ERROR_MESSAGE);
+             JOptionPane.showMessageDialog(null, "no se pudo encontrar el archivo de Configuracion a la conexion de base de datos", "Vacaciones Cortijo",JOptionPane.ERROR_MESSAGE);
              return null;
         }
     }

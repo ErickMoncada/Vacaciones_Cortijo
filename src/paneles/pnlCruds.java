@@ -1,10 +1,10 @@
 package paneles;
 
-import paneles.ExtraUsuarios.CentroCosto;
-import paneles.ExtraUsuarios.Empleados;
-import paneles.ExtraUsuarios.GerentesAreas;
-import paneles.ExtraUsuarios.Puestos;
-import paneles.ExtraUsuarios.VacacionesYear;
+import cruds.CentroCosto;
+import cruds.Empleados;
+import cruds.GerentesAreas;
+import cruds.Puestos;
+import cruds.VacacionesYear;
 
 /**
  * @ErickMoncada panel de Bienvenida

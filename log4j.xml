@@ -1,0 +1,12 @@
+# log4j.properties
+log4j.rootLogger=INFO, stdout
+
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%-5p %c{1} - %m%n
+
+# Agregar un dispositivo de salida (appender) para el registrador específico que causa la advertencia
+log4j.logger.net.sf.jasperreports.extensions.ExtensionsEnvironment=DEBUG, myAppender
+log4j.appender.myAppender=org.apache.log4j.ConsoleAppender
+log4j.appender.myAppender.layout=org.apache.log4j.PatternLayout
+log4j.appender.myAppender.layout.ConversionPattern=%-5p %c{1} - %m%n

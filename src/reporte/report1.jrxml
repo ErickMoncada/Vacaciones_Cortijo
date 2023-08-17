@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="87556103-6f11-40ea-84fa-0e618a1fbaff">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CentroCosto" class="java.lang.String"/>
+	<parameter name="YearDiasSolicitados" class="java.lang.String"/>
+	<parameter name="DiaInicio" class="java.lang.String"/>
+	<parameter name="MesInicio" class="java.lang.String"/>
+	<parameter name="AnioInicio" class="java.lang.String"/>
+	<parameter name="FechaIngreso" class="java.lang.String"/>
+	<parameter name="TiempoLaborando" class="java.lang.String"/>
+	<parameter name="DiasSolicitados" class="java.lang.String"/>
+	<parameter name="FechaInicio" class="java.lang.String"/>
+	<parameter name="FechaFinal" class="java.lang.String"/>
+	<parameter name="FechaRegreso" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT *
+  FROM [Vacaciones_Cortijo].[dbo].[VistaSolicitudes] where idSolicitud=$P{id}]]>
+	</queryString>
+	<field name="IdSolicitud" class="java.lang.Integer"/>
+	<field name="Nombre" class="java.lang.String"/>
+	<field name="Inicio" class="java.sql.Date"/>
+	<field name="Final" class="java.sql.Date"/>
+	<field name="Dias" class="java.lang.Integer"/>
+	<field name="Jefe" class="java.lang.String"/>
+	<field name="IdNivel" class="java.lang.Integer"/>
+	<field name="NumCentroCosto" class="java.lang.String"/>
+	<field name="AreaCC" class="java.lang.Integer"/>
+	<field name="CodEmpleado" class="java.lang.Integer"/>
+	<field name="Estado" class="java.lang.Integer"/>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="241" y="14" width="321" height="20" uuid="dbc72f68-38bb-4169-b12b-35c23aba208f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Dialog" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMPRESA AVÍCOLA EL CORTIJO, S.A DE C.V]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="318" y="40" width="174" height="30" uuid="13671826-7f92-400c-b4c2-8873e3668c66"/>
+				<textElement textAlignment="Center">
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[SOLICITUD DE VACACIONES]]></text>
+			</staticText>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="50" y="14" width="50" height="50" uuid="0d240db1-51e5-4dc7-a089-36700c10eec9"/>
+				<imageExpression><![CDATA["./Pollos-El-Cortijo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="6" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="201" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="802" height="57" uuid="15550c09-7659-4c91-a1d7-db1bc8ae5365"/>
+				<textElement>
+					<font fontName="Arial" size="13" isBold="false" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Yo " +$F{Nombre}+" que laboro en el departamento de "+$P{CentroCosto}+", por medio de la presente solicito me concedan las vacaciones correspondientes al "+$P{YearDiasSolicitados}+", las cuales tomaré a partir del día "+$P{DiaInicio}+" de "+$P{MesInicio}+" del año "+ $P{AnioInicio}+"."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="57" width="260" height="22" uuid="e251b39e-6516-48b7-9e17-395aca496b0e"/>
+				<textElement>
+					<font fontName="Arial" size="13" isBold="false" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fecha de Ingreso: "+$P{FechaIngreso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="79" width="260" height="22" uuid="c6f5dc45-9fe5-45e3-a2d7-74de48a0661a"/>
+				<textElement>
+					<font fontName="Arial" size="13" isBold="false" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Iniciando el: "+$P{FechaInicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="57" width="260" height="22" uuid="d7d65b9a-7f64-4fd6-b9dd-8b88ccb52a1a"/>
+				<textElement>
+					<font fontName="Arial" size="13" isBold="false" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Años de Laborar: "+$P{TiempoLaborando}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="79" width="260" height="22" uuid="1e0eb607-066a-4dbb-bc8a-d7c860a4ebbb"/>
+				<textElement>
+					<font fontName="Arial" size="13" isBold="false" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Terminando el: "+$P{FechaFinal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="520" y="57" width="260" height="22" uuid="a358f9a5-bbb0-46bf-9cf4-caf49374f350"/>
+				<textElement>
+					<font fontName="Arial" size="13" isBold="false" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Días de Vacaciones: " +$P{DiasSolicitados}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="520" y="79" width="260" height="22" uuid="8fe63f9b-ccf3-45f7-8667-777487f425af"/>
+				<textElement>
+					<font fontName="Arial" size="13" isBold="false" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Regresando el: "+$P{FechaRegreso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="33" y="167" width="208" height="30" uuid="f583ab1b-b0a9-48de-8fec-5ac730f46568"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Nombre y Firma del empleado 
+Solicitante]]></text>
+			</staticText>
+			<line>
+				<reportElement x="33" y="166" width="208" height="1" uuid="508806f6-3a8c-44db-be5e-0517d2742be4"/>
+			</line>
+			<staticText>
+				<reportElement x="278" y="167" width="208" height="30" uuid="0f441b25-1065-443a-830f-add688df795b"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Nombre y Firma de quien recibe en Recursos Humanos]]></text>
+			</staticText>
+			<line>
+				<reportElement x="278" y="166" width="208" height="1" uuid="bd9f7aa4-7821-4a35-a091-53c30399317e"/>
+			</line>
+			<line>
+				<reportElement x="538" y="165" width="208" height="1" uuid="6fdf9691-740a-4bb6-bfe0-b4c94d1b22e4"/>
+			</line>
+			<staticText>
+				<reportElement x="538" y="166" width="208" height="30" uuid="cc53eebe-0509-47f2-b12e-7f082a58c779"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Nombre y Firma del Jefe que autoriza]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="9" splitType="Stretch"/>
+	</columnFooter>
+</jasperReport>

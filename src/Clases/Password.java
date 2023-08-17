@@ -82,8 +82,8 @@ public class Password {
             //se comprueba si existe el usuario, de lo contrario se envia codigo 0 que significa que no encontro usuario
             if (rs.next()) {
                 datos[7] = rs.getString("Correo");
-                datos[8] = "Usuario creado Telefonia Pollos Cortijo";
-                datos[9] = "¡Se ha creado una cuenta para la gestión de telefonía del cortijo con tu dirección de correo electrónico! Tu contraseña generada es: '" + password + "' y tu usuario es: '" + usuario + "'. Por motivos de seguridad, te recomendamos cambiar esta contraseña. Puedes hacerlo fácilmente a través de la aplicación de gestión telefónica.";
+                datos[8] = "Usuario creado Gestor de Vacaciones Pollos Cortijo";
+                datos[9] = "¡Se ha creado una cuenta para la gestión de vacaciones del cortijo con tu dirección de correo electrónico! Tu contraseña generada es: '" + password + "' y tu usuario es: '" + usuario + "'. Por motivos de seguridad, te recomendamos cambiar esta contraseña. Puedes hacerlo fácilmente a través de la aplicación de gestión de vacaciones.";
                 datos();
                 EnvioCorreos envio = new EnvioCorreos();
                if(envio.createEmail(datos)==0){

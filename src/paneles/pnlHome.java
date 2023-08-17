@@ -8,7 +8,7 @@ public class pnlHome extends javax.swing.JPanel {
 
     public pnlHome(String Nombre) {
         initComponents();
-        lblMensaje.setText("Bienvenid@ "+Nombre.toLowerCase()+" al menú de la Gestión Telefónica Cortijo");
+        lblMensaje.setText("Bienvenid@ "+Nombre.toLowerCase()+" al menú de solicitudes de vacaciones");
     }
 
     @SuppressWarnings("unchecked")
@@ -24,7 +24,7 @@ public class pnlHome extends javax.swing.JPanel {
         lblMensaje.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         lblMensaje.setForeground(new java.awt.Color(38, 86, 186));
         lblMensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblMensaje.setText("Versión de desarrollo Gestión telefónica");
+        lblMensaje.setText("Versión de desarrollo Vacaciones");
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img1/Pollos-El-Cortijo.png"))); // NOI18N
