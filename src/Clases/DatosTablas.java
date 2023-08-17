@@ -61,12 +61,31 @@ public class DatosTablas {
             JOptionPane.showMessageDialog(null, e.toString());
         }
     }
-    public void cargarComboBoxEItems(String cmd, String campo,String idcampo, JComboBox cmbDestino) {
+    
+    public void cargarComboBoxGerentes(String cmd, String campo,String idcampo, JComboBox cmbDestino) {
     PreparedStatement ps;
     ResultSet rs;
     try {
         Connection con = Conexion.getConexion();
         ps = con.prepareStatement(cmd);
+        ps.setString(1, idcampo);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            String dato = rs.getString(campo);
+            cmbDestino.addItem( dato);
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, e.toString());
+    }
+}
+    
+      public void cargarComboBoxEItems(String cmd, String campo,String idcampo,String idarea, JComboBox cmbDestino) {
+    PreparedStatement ps;
+    ResultSet rs;
+    try {
+        Connection con = Conexion.getConexion();
+        ps = con.prepareStatement(cmd);
+        ps.setString(1, idarea);
         rs = ps.executeQuery();
         while (rs.next()) {
             int id = rs.getInt(idcampo);

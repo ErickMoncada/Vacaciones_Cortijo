@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -85,6 +86,28 @@ public class AccionesCrud {
             rs = ps.executeQuery();
             while (rs.next()) {
                 campo.setText(rs.getString(ExecCampo));
+                ID.setText(rs.getString(ExecId));
+            }
+            return true;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+            return false;
+        }
+
+    }
+    
+    public boolean CargarDatoClickCMB(JTable tblCentro, String exec, String ExecCampo, String ExecId,String ExecCampo2, JComboBox campo, JTextField ID,JTextField txtid) {
+        try {
+            int fila = tblCentro.getSelectedRow();
+            String dato = tblCentro.getValueAt(fila, 0).toString();
+            PreparedStatement ps;
+            ResultSet rs;
+            Connection con = Conexion.getConexion();
+            ps = con.prepareStatement(exec);
+            ps.setString(1, dato);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                campo.setSelectedItem(rs.getString(ExecCampo));
                 ID.setText(rs.getString(ExecId));
             }
             return true;
