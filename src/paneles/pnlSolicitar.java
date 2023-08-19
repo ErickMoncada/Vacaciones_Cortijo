@@ -203,7 +203,7 @@ public class pnlSolicitar extends javax.swing.JPanel {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Cod. Empleado", "Nombre", "Dias Disponibles primer año", "Dias Disponibles 2do año", "Dias Disponibles 3er año", "Dias Disponibles 4to año en adelante"
+                "Cod. Empleado", "Nombre", "Días Disponibles primer año", "Días Disponibles 2do año", "Días Disponibles 3er año", "Días Disponibles 4to año en adelante"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -286,7 +286,7 @@ public class pnlSolicitar extends javax.swing.JPanel {
         });
 
         lblDiasSolicitados.setForeground(new java.awt.Color(0, 0, 0));
-        lblDiasSolicitados.setText("Dias Solicitados:");
+        lblDiasSolicitados.setText("Días Solicitados:");
 
         cmbYearDiasSolicitados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Primer Año", "Segundo Año", "Tercer Año", "Cuarto Año en adelante" }));
         cmbYearDiasSolicitados.addItemListener(new java.awt.event.ItemListener() {
@@ -396,11 +396,12 @@ public class pnlSolicitar extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(869, 969, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(153, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

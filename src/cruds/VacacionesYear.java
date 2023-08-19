@@ -180,7 +180,7 @@ public class VacacionesYear extends javax.swing.JFrame {
                 {null, null}
             },
             new String [] {
-                "Años de Antiguedad", "Dias Asignados por año"
+                "Años de Antiguedad", "Días Asignados por año"
             }
         ) {
             boolean[] canEdit = new boolean [] {

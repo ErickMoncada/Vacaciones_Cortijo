@@ -5,6 +5,10 @@ import Clases.DatosTablas;
 import Clases.FuncionesSolicitudes;
 import Clases.validaciones;
 import app.Conexion;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +19,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.WindowConstants;
 import net.sf.jasperreports.engine.JRException;
@@ -419,11 +424,15 @@ public class pnlSolicitudes extends javax.swing.JPanel {
     }//GEN-LAST:event_txtBuscarKeyTyped
 
     private void btnDenegarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDenegarActionPerformed
+   int option = JOptionPane.showConfirmDialog(null, "¿Esta Seguro que quiere DENEGAR la solicitud?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (option == JOptionPane.YES_OPTION) {
         AccionesCrud classcrud = new AccionesCrud();
         if (classcrud.Guardar_Modificar(ArregloDatos(), "exec [NegarSolicitud] ?, ? ,? ")) {
             Limpiar();
             CargarDatosTabla();
         }
+        }
+        
     }//GEN-LAST:event_btnDenegarActionPerformed
 
     private Object[] ArregloDatos() {
@@ -495,11 +504,11 @@ public class pnlSolicitudes extends javax.swing.JPanel {
         return parametros;
     }
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+
         try {
-            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("../reporte/report1.jasper"));
+            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/reporte/ReporteVacaciones.jasper"));
             Connection con = Conexion.getConexion();
             JasperPrint jprint = JasperFillManager.fillReport(report, ArregloDatosReporte(), con);
-            System.out.print("vamos aqiuio2");
             JasperViewer view = new JasperViewer(jprint, false);
             view.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             view.setVisible(true);

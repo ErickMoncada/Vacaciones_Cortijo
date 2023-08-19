@@ -54,7 +54,7 @@ public class GerentesAreas extends javax.swing.JFrame {
         //cargar los datos de los combobox
         DatosTablas Datos = new DatosTablas();
        // Datos.cargarComboBoxGerentes("select NombreCompleto from VistaEmpleados where IdNivel=5 and AreaEmpleado=?", "NombreCompleto", txtid.getText(), cmbGerente);
-        Datos.cargarComboBoxEItems("select CodEmpleado,NombreCompleto from VistaEmpleados where IdNivel=5 and AreaEmpleado=?", "NombreCompleto", "CodEmpleado", txtid.getText(),cmbGerente);
+        Datos.cargarComboBoxEItems("select CodEmpleado,NombreCompleto from VistaEmpleados where IdNivel=6 and AreaEmpleado=?", "NombreCompleto", "CodEmpleado", txtid.getText(),cmbGerente);
 
     }
 
@@ -84,7 +84,7 @@ public class GerentesAreas extends javax.swing.JFrame {
         setType(java.awt.Window.Type.POPUP);
 
         jLabel1.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
-        jLabel1.setText("Genrentes por areas");
+        jLabel1.setText("Genrentes por Áreas");
 
         cmbGerente.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -106,7 +106,7 @@ public class GerentesAreas extends javax.swing.JFrame {
 
         lblTitulo.setForeground(new java.awt.Color(0, 0, 0));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Gerente del Area:");
+        lblTitulo.setText("Gerente del Área:");
 
         tblCentro.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         tblCentro.setModel(new javax.swing.table.DefaultTableModel(
@@ -117,7 +117,7 @@ public class GerentesAreas extends javax.swing.JFrame {
                 {null, null}
             },
             new String [] {
-                "Areas", "Gerentes"
+                "Áreas", "Gerentes"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -128,6 +128,7 @@ public class GerentesAreas extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblCentro.getTableHeader().setReorderingAllowed(false);
         tblCentro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblCentroMouseClicked(evt);
@@ -249,7 +250,7 @@ public class GerentesAreas extends javax.swing.JFrame {
     private void tblCentroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCentroMouseClicked
         //se trata de obtener los datos de la tabla para mostrarlos en las casillas respectivas con ayuda de sql
         AccionesCrud classcrud = new AccionesCrud();
-        if (classcrud.CargarDatoClick(tblCentro, "SELECT IdArea,[Area] from VistaArea where Area=?", "Area", "IdArea", txtArea, txtid)) {
+        if (classcrud.CargarDatoClick(tblCentro, "SELECT IdArea,Area from VistaArea where Area=?", "Area", "IdArea", txtArea, txtid)) {
             btnCancelar.setVisible(true);
             lblTitulo.setText("Gerente del Area "+txtArea.getText()+": ");
             SeleccionarGerente(txtArea.getText());

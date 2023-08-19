@@ -222,7 +222,7 @@ public class CentroCosto extends javax.swing.JFrame {
         });
 
         lblNombre1.setForeground(new java.awt.Color(0, 0, 0));
-        lblNombre1.setText("Area del Centro de Costo:");
+        lblNombre1.setText("Área del Centro de Costo:");
 
         lblErAreas.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         lblErAreas.setForeground(new java.awt.Color(255, 0, 0));
@@ -371,6 +371,7 @@ public class CentroCosto extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblCentro.getTableHeader().setReorderingAllowed(false);
         tblCentro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblCentroMouseClicked(evt);
@@ -385,8 +386,7 @@ public class CentroCosto extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addGap(0, 0, 0))
+                .addComponent(jScrollPane1))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

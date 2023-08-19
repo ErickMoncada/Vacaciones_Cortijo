@@ -50,7 +50,7 @@
 			</staticText>
 			<image scaleImage="FillFrame" onErrorType="Blank">
 				<reportElement x="50" y="14" width="50" height="50" uuid="0d240db1-51e5-4dc7-a089-36700c10eec9"/>
-				<imageExpression><![CDATA["./Pollos-El-Cortijo.png"]]></imageExpression>
+				<imageExpression><![CDATA["/Pollos-El-Cortijo.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

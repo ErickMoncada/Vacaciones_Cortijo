@@ -46,7 +46,7 @@
                   <Component id="jButton2" pref="63" max="32767" attributes="0"/>
                   <Component id="jButton1" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButton3" alignment="3" min="-2" pref="63" max="-2" attributes="0"/>
                   <Component id="jButton4" alignment="3" min="-2" pref="63" max="-2" attributes="0"/>
@@ -56,7 +56,7 @@
                   <Component id="jButton5" alignment="3" min="-2" pref="63" max="-2" attributes="0"/>
                   <Component id="jButton6" alignment="3" min="-2" pref="63" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="72" max="32767" attributes="0"/>
+              <EmptySpace pref="102" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -96,7 +96,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton5">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Gerentes de areas" noResource="true"/>
+        <Property name="text" type="java.lang.String" value="Gerentes de &#xc1;reas" noResource="true"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
@@ -104,7 +104,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton6">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Areas" noResource="true"/>
+        <Property name="text" type="java.lang.String" value="&#xc1;reas" noResource="true"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>

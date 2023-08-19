@@ -56,13 +56,14 @@
                       <Component id="cmbBuscar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="txtBuscar" min="-2" pref="149" max="-2" attributes="0"/>
+                      <EmptySpace min="869" pref="969" max="32767" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="1210" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="153" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -115,10 +116,10 @@
               <Table columnCount="6" rowCount="4">
                 <Column editable="false" title="Cod. Empleado" type="java.lang.Object"/>
                 <Column editable="false" title="Nombre" type="java.lang.Object"/>
-                <Column editable="false" title="Dias Disponibles primer a&#xf1;o" type="java.lang.Object"/>
-                <Column editable="false" title="Dias Disponibles 2do a&#xf1;o" type="java.lang.Object"/>
-                <Column editable="false" title="Dias Disponibles 3er a&#xf1;o" type="java.lang.Object"/>
-                <Column editable="false" title="Dias Disponibles 4to a&#xf1;o en adelante" type="java.lang.Object"/>
+                <Column editable="false" title="D&#xed;as Disponibles primer a&#xf1;o" type="java.lang.Object"/>
+                <Column editable="false" title="D&#xed;as Disponibles 2do a&#xf1;o" type="java.lang.Object"/>
+                <Column editable="false" title="D&#xed;as Disponibles 3er a&#xf1;o" type="java.lang.Object"/>
+                <Column editable="false" title="D&#xed;as Disponibles 4to a&#xf1;o en adelante" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -397,7 +398,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Dias Solicitados:"/>
+            <Property name="text" type="java.lang.String" value="D&#xed;as Solicitados:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cmbYearDiasSolicitados">

@@ -56,7 +56,7 @@
           <Color blue="ba" green="56" red="26" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Versi&#xf3;n de desarrollo Vacaciones"/>
+        <Property name="text" type="java.lang.String" value="Versi&#xf3;n 1.1 Vacaciones Cortijo"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">

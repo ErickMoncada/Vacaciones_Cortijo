@@ -59,7 +59,7 @@ public class Puestos extends javax.swing.JFrame {
         tblCentro = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Puestos de Teabajo");
+        setTitle("Puestos de Trabajo");
         setResizable(false);
         setType(java.awt.Window.Type.POPUP);
 

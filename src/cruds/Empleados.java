@@ -6,6 +6,7 @@ import Clases.FuncionesSolicitudes;
 import Clases.Reescalado_Imagenes;
 import Clases.validaciones;
 import app.Conexion;
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import javax.swing.*;
@@ -53,7 +54,6 @@ public class Empleados extends javax.swing.JFrame {
         CrearTabla.CargarTabla(tblCentro, "SELECT * from [VistaEmpleadosCrud] where " + Busqueda + "  LIKE '%" + txtBuscar.getText().trim() + "%'");
     }
 
-    
     private void asignarEventos() {
         //funcion para asignar los eventos a los mensajes de obligatorio con la clase de validaciones
         val.asignarEventosMouse(lblObligatorio);
@@ -67,8 +67,8 @@ public class Empleados extends javax.swing.JFrame {
         val.asignarEventosMouse(lblObligatorioCentro);
     }
 
-    private void limitesfechas(){
-     //obtener la hora del servidor para poner de limite
+    private void limitesfechas() {
+        //obtener la hora del servidor para poner de limite
         try {
             Connection con = Conexion.getConexion();
             PreparedStatement ps;
@@ -78,14 +78,18 @@ public class Empleados extends javax.swing.JFrame {
                 Timestamp serverTime = rs.getTimestamp("HoraActual");
                 Date maxDate = new Date(serverTime.getTime());
                 dtpIngreso.setMaxSelectableDate(maxDate);
-                FuncionesSolicitudes funciones=new FuncionesSolicitudes();
-                Date fecharestada=funciones.RestarAnios(maxDate, 18);
+                FuncionesSolicitudes funciones = new FuncionesSolicitudes();
+                Date fecharestada = funciones.RestarAnios(maxDate, 18);
                 dtpNacimiento.setMaxSelectableDate(fecharestada);
-           
+                dtpNacimiento.setDate(fecharestada);
+                
+                dtpNacimiento.getDateEditor().getUiComponent().setForeground(Color.white);
+
             }
         } catch (SQLException ex) {
         }
     }
+
     //desactivar botones y solo mostrar btnGurdar
     private void Limpiar() {
         txtCodigo.setText("");
@@ -217,7 +221,7 @@ public class Empleados extends javax.swing.JFrame {
         });
 
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Codigo del Empleado:");
+        jLabel4.setText("Código del Empleado:");
 
         txtCodigo.setPreferredSize(new java.awt.Dimension(65, 26));
         txtCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -396,7 +400,7 @@ public class Empleados extends javax.swing.JFrame {
         });
 
         lblArea.setForeground(new java.awt.Color(0, 0, 0));
-        lblArea.setText("Area:");
+        lblArea.setText("Área:");
 
         cmbArea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
         cmbArea.addItemListener(new java.awt.event.ItemListener() {
@@ -605,7 +609,7 @@ public class Empleados extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Cod. Empleado", "Nombre Completo", "Fecha de Ingreso", "Fecha de Nacimiento", "Identidad del Empleado", "Nivel", "Puesto de Trabajo", "Centro de Costo", "Area"
+                "Cod. Empleado", "Nombre Completo", "Fecha de Ingreso", "Fecha de Nacimiento", "Identidad del Empleado", "Nivel", "Puesto de Trabajo", "Centro de Costo", "Área"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -724,51 +728,55 @@ public class Empleados extends javax.swing.JFrame {
     private boolean ValidarCampos() {
         int valor1 = 1;
         String error;
-          if (txtNombre.getText().isEmpty()) {
+        if (txtNombre.getText().isEmpty()) {
             valor1 = 0;
             error = "Escriba un nombre de empleado";
             val.TXTincorrecto(txtNombre, lblErNombre, error);
         }
-          if (txtCodigo.getText().isEmpty()) {
+        if (txtCodigo.getText().isEmpty()) {
             valor1 = 0;
             error = "Escriba un código de empleado";
             val.TXTincorrecto(txtCodigo, lblErCodigo, error);
         }
-          if (val.ValidarFechas(dtpIngreso, lblErIngreso) == 0) {
+        if (val.ValidarFechas(dtpIngreso, lblErIngreso) == 0) {
             valor1 = 0;
         }
-          if (val.ValidarFechas(dtpNacimiento, lblErNacimiento) == 0) {
+        if (val.ValidarFechas(dtpNacimiento, lblErNacimiento) == 0 ) {        
             valor1 = 0;
-        }
-          if (txtCodigo.getText().isEmpty()) {
+        }else if(dtpNacimiento.getDateEditor().getUiComponent().getForeground() == Color.white){
+            valor1 = 0;
+            error="Debe seleccionar una fecha";
+            val.GENIncorrecto(lblErNacimiento, error);
+            }
+        if (txtCodigo.getText().isEmpty()) {
             valor1 = 0;
             error = "Escriba un código de empleado";
             val.TXTincorrecto(txtCodigo, lblErCodigo, error);
         }
-          
-           if (txtIdentidad.getText().isEmpty() || !txtIdentidad.getText().matches("\\d{13}")) {
+
+        if (txtIdentidad.getText().isEmpty() || !txtIdentidad.getText().matches("\\d{13}")) {
             valor1 = 0;
             error = "Digite una identidad valida";
             val.TXTincorrecto(txtIdentidad, lblErIdentidad, error);
         }
-           
-            if (cmbNivel.getSelectedItem() == null || cmbNivel.getSelectedItem() == "") {
+
+        if (cmbNivel.getSelectedItem() == null || cmbNivel.getSelectedItem() == "") {
             valor1 = 0;
             error = "Seleccione un nivel";
             val.CMBincorrecto(cmbNivel, lblErNivel, error);
         }
-            
-            if (cmbPuesto.getSelectedItem() == null || cmbPuesto.getSelectedItem() == "") {
+
+        if (cmbPuesto.getSelectedItem() == null || cmbPuesto.getSelectedItem() == "") {
             valor1 = 0;
             error = "Seleccione un puesto";
             val.CMBincorrecto(cmbPuesto, lblErPuesto, error);
         }
-             if (cmbCentroCosto.getSelectedItem() == null && cmbCentroCosto.isVisible() || cmbCentroCosto.getSelectedItem() == "" && cmbCentroCosto.isVisible()) {
+        if (cmbCentroCosto.getSelectedItem() == null && cmbCentroCosto.isVisible() || cmbCentroCosto.getSelectedItem() == "" && cmbCentroCosto.isVisible()) {
             valor1 = 0;
             error = "Seleccione un Centro de Costo";
             val.CMBincorrecto(cmbCentroCosto, lblErCentroCosto, error);
         }
-              if (cmbArea.getSelectedItem() == null && cmbArea.isVisible() || cmbArea.getSelectedItem() == "" && cmbArea.isVisible()) {
+        if (cmbArea.getSelectedItem() == null && cmbArea.isVisible() || cmbArea.getSelectedItem() == "" && cmbArea.isVisible()) {
             valor1 = 0;
             error = "Seleccione una Area";
             val.CMBincorrecto(cmbArea, lblErArea, error);
@@ -803,6 +811,16 @@ public class Empleados extends javax.swing.JFrame {
                 lblCentro.setVisible(false);
                 lblErCentroCosto.setVisible(false);
                 lblObligatorioCentro.setVisible(false);
+
+            } else if (cmbNivel.getSelectedItem().equals("Director")) {
+                cmbCentroCosto.setVisible(false);
+                lblCentro.setVisible(false);
+                lblErCentroCosto.setVisible(false);
+                lblObligatorioCentro.setVisible(false);
+                lblObligatorioArea.setVisible(false);
+                lblErArea.setVisible(false);
+                cmbArea.setVisible(false);
+                lblArea.setVisible(false);
             } else {
                 cmbArea.setVisible(false);
                 lblArea.setVisible(false);
@@ -880,15 +898,15 @@ public class Empleados extends javax.swing.JFrame {
         datos[3] = txtIdentidad.getText();
         datos[4] = cmbNivel.getSelectedItem().toString();
         datos[5] = cmbPuesto.getSelectedItem().toString();
-         if (cmbCentroCosto.getSelectedItem() == null) {
-        datos[7] ="";}
-         else{
-           datos[7] = cmbCentroCosto.getSelectedItem().toString();
-         }
+        if (cmbCentroCosto.getSelectedItem() == null) {
+            datos[7] = "";
+        } else {
+            datos[7] = cmbCentroCosto.getSelectedItem().toString();
+        }
         if (cmbArea.getSelectedItem() == null) {
             datos[8] = "";
-        }else{
-        datos[8] = cmbArea.getSelectedItem().toString();
+        } else {
+            datos[8] = cmbArea.getSelectedItem().toString();
         }
         return datos;
     }
@@ -918,14 +936,12 @@ public class Empleados extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-  LimpiarErrores();
-        if (ValidarCampos()) {
+        LimpiarErrores();
             AccionesCrud classcrud = new AccionesCrud();
             //se crea un arreglo de objetos para enviar a la clase de AccionesCrud y la funcion de Guardar_Modificar
             if (classcrud.Eliminar(txtCodigo, "exec [EliminarEmpleado] ?")) {
                 CargarTabla();
-                Limpiar();
-            }
+                Limpiar();         
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -996,17 +1012,17 @@ public class Empleados extends javax.swing.JFrame {
     private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
         //switch para decidir que validacion establecer cada ves que se preciona una tecla en buscar
         switch (Busqueda) {
-            case "Nombre":
-            val.EntradaSoloLetas(txtBuscar, evt, 80);
-            break;
-            case "Codigo":
-            val.EntradaNumeros(txtBuscar, evt, 7);
-            break;
-            case "Identidad":
-            val.EntradaNumeros(txtBuscar, evt,13);
-            break;
+            case "NombreCompleto":
+                val.EntradaSoloLetas(txtBuscar, evt, 80);
+                break;
+            case "CodEmpleado":
+                val.EntradaNumeros(txtBuscar, evt, 7);
+                break;
+            case "IdEmpleado":
+                val.EntradaNumeros(txtBuscar, evt, 13);
+                break;
             default:
-            break;
+                break;
         }
     }//GEN-LAST:event_txtBuscarKeyTyped
 
@@ -1015,16 +1031,16 @@ public class Empleados extends javax.swing.JFrame {
         String elementoSeleccionado = (String) cmbBuscar.getSelectedItem();
         switch (elementoSeleccionado) {
             case "Nombre":
-            Busqueda = "NombreCompleto";
-            break;
+                Busqueda = "NombreCompleto";
+                break;
             case "Codigo":
-            Busqueda = "CodEmpleado";
-            break;
+                Busqueda = "CodEmpleado";
+                break;
             case "Identidad":
-            Busqueda = "IdEmpleado";
-            break;
+                Busqueda = "IdEmpleado";
+                break;
             default:
-            break;
+                break;
         }
         CargarTabla();
         txtBuscar.setText("");
